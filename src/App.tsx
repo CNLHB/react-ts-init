@@ -1,23 +1,28 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom'
-import { AppRoutes, renderRouter, routeConfig } from './router/router'
-import './App.less';
+import { AppRoutes, renderRouter } from './router/router'
 import Header from '@/layout/header/header';
 import Main from '@/layout/main/main';
-import { Route } from 'react-router-dom';
+import './App.less';
+
+import { useTranslation } from "react-i18next";
+
 
 function App() {
+  const { t } = useTranslation();
   return (
     <div className="user">
-      <Suspense fallback={<div>loading</div>}>
-
+      {/* 懒加载 */}
+      {/* <Suspense fallback={<div>loading</div>}> */}
         <Router >
           <Header></Header>
+
+          { t('common:name')}
           <Main>
             {renderRouter(AppRoutes)}
           </Main>
         </Router>
-      </Suspense>
+      {/* </Suspense> */}
 
     </div>
   );

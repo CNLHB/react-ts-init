@@ -1,15 +1,15 @@
-import React, { LazyExoticComponent, lazy } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Team from "@/view/team/team"
+import PersonCenter from "@/view/person-work/project/project"
+import PersonWork from "@/view/person-work/person-work"
 import NoMatch from '@/view/no-match/no-match'
-import PersonCenter from "@/view/person-center/person-center";
-import PersonWork from "@/view/person-work/person-work";
-import Project from "@/view/project/project";
-import Grade from "@/view/person-work/grade/grade";
+import Account from "@/view/person-center/account/account"
+import Grade from "@/view/person-work/grade/grade"
+import Test from './../view/components-test/index';
 
 export interface RouteType {
     pathname?: string;
-    component: LazyExoticComponent<any> | any;
+    component:  React.FunctionComponent<any>| React.ComponentClass<any>;
     exact: boolean;
     auth?: boolean
     title?: string;
@@ -20,61 +20,44 @@ export const prefix = "/user/account"
 export const AppRoutes: RouteType[] = [
     {
         pathname: "/center",
-        component: lazy(() => import("@/view/person-center/person-center")),
+        component: PersonCenter,
         auth: false,
         exact: false,
         children: [{
             pathname: "/center/account",
-            component: lazy(() => import("@/view/person-center/account/account")),
+            component: Account,
             auth: false,
             exact: true,
         }, {
             pathname: "/center/account1",
-            component: lazy(() => import("@/view/person-center/account/account")),
+            component: Account,
             auth: false,
             exact: false,
         }]
     },
     {
         pathname: "/work",
-        component: lazy(() => import("@/view/person-work/person-work")),
+        component: PersonWork,
         auth: false,
         exact: false,
         children: [{
             pathname: "/work/grade",
-            component: lazy(() => import("@/view/person-work/grade/grade")),
+            component: Grade,
             auth: false,
-            exact: true,
+            exact: false,
         }]
-    },
-    {
-        pathname: "/project",
-        component: lazy(() => import("../view/project/project")),
-        auth: false,
-        exact: true,
     },
     {
         pathname: "/404",
         exact: true,
         auth: false,
-        component: lazy(() => import("../view/no-match/no-match")),
+        component: NoMatch,
     }, {
-        pathname: "/",
+        pathname: "/test",
         exact: true,
-        auth: true,
-        component: Team,
+        auth: false,
+        component: Test,
     },
-];
-//
-export const ContentRoutes: RouteType[] = [
-
-    {
-        pathname: "/",
-        exact: true,
-        auth: true,
-        component: lazy(() => import("../view/no-match/no-match")),
-    }
-
 ];
 
 export const renderRouter = (router: RouteType[]) => {
@@ -84,7 +67,7 @@ export const renderRouter = (router: RouteType[]) => {
             return (
                 <Route
                     path={prefix + item.pathname}
-                    exact={item.exact}
+                    exact={item.exact ? item.exact : false}
                     key={item.pathname}
                     render={
                         () => {
@@ -106,25 +89,3 @@ export const renderRouter = (router: RouteType[]) => {
     </Switch>
 };
 
-export const routeConfig = [
-    {
-        path: '/work',
-        component: PersonWork,
-        indexRoute: { component: Team },
-        childRoutes: [
-            { path: 'team', component: Team },
-            {
-                path: 'project',
-                component: Project,
-                childRoutes: [
-                    { path: '/grade', component: Grade },
-                    // { path: 'messages/:id',
-                    //   onEnter: function (nextState, replaceState) {
-                    //     replaceState(null, '/messages/' + nextState.params.id)
-                    //   }
-                    // }
-                ]
-            }
-        ]
-    }
-]

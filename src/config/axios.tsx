@@ -36,7 +36,7 @@ axios.interceptors.response.use(
         return Promise.resolve(res.data);
     },
     err => {
-            return Promise.resolve(err);
+            return Promise.resolve(err.response.data);
         }
 );
 
@@ -54,7 +54,7 @@ export const post = (url: string, params: object): any => {
     });
 };
 
-// @RequsetParam请求
+// @requestParam请求
 export const postParam = (url: string, params: object): any => {
     return axios({
         method: "post",
@@ -129,6 +129,6 @@ export const putParm = (url: string, params: object): any => {
     });
 };
 
-export const multiple = function (requsetArray: any, callback: any) {
-    axios.all(requsetArray).then(axios.spread(callback));
+export const multiple = function (requestArray: any, callback: any) {
+    axios.all(requestArray).then(axios.spread(callback));
 };
