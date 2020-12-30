@@ -34,7 +34,7 @@ export const Menu: ParentMenu = (props) => {
     defaultOpenSubMenus,
   } = props;
   const [currentActive, setActive] = useState(defaultIndex);
-  const classes = classNames("seven-menu", className, {
+  const classes = classNames("eda-menu", className, {
     "menu-vertical": mode === "vertical",
     "menu-horizontal": mode !== "vertical",
   });

@@ -38,8 +38,6 @@ export const Tabs: ParentTabs = (props) => {
   });
   const handleClick = (index: string) => {
     setActive(index);
-    console.log(index);
-    
     if (onChange) {
        onChange(index);
     }

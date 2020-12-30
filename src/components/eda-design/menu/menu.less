@@ -1,6 +1,6 @@
 @import "../styles/variables.less";
 @import "../styles/mixin.less";
-.seven-menu {
+.eda-menu {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -62,7 +62,7 @@
       transform: rotate(180deg) !important;
     }
   }
-  .seven-submenu {
+  .eda-submenu {
     display: none;
     list-style: none;
     //position: absolute;
@@ -80,7 +80,7 @@
       }
     }
   }
-  .seven-submenu.menu-opened {
+  .eda-submenu.menu-opened {
     display: block;
   }
 }
@@ -88,7 +88,7 @@
   > .menu-item {
     border-bottom: @menu-item-active-border-width solid transparent;
   }
-  .seven-submenu {
+  .eda-submenu {
     position: absolute;
     background: @white;
     z-index: 100;

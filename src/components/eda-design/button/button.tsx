@@ -1,5 +1,6 @@
 import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 import { classNames } from '../utils'
+import './button.less'
 export type ButtonSize = "lg" | "sm";
 export type ButtonType = "primary" | "default" | "danger" | "link" | "warning";
 
@@ -38,9 +39,9 @@ export const Button: FC<ButtonProps> = (props) => {
     ...restProps
   } = props;
   // btn, btn-lg, btn-primary
-  const classes = classNames("btn", className, {
-    [`btn-${btnType}`]: btnType,
-    [`btn-${size}`]: size,
+  const classes = classNames("eda-btn", className, {
+    [`eda-btn-${btnType}`]: btnType,
+    [`eda-btn-${size}`]: size,
     disabled: btnType === "link" && disabled,
   });
   if (btnType === "link" && href) {

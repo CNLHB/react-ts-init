@@ -1,4 +1,6 @@
-.btn {
+@import "../styles/variables.less";
+@import "../styles/mixin.less";
+.eda-btn {
     position: relative;
     display: inline-block;
     font-weight: @btn-font-weight;
@@ -9,6 +11,7 @@
     vertical-align: middle;
     background-image: none;
     border: @btn-border-width solid transparent;
+    outline: none;
     .button-size(
       @btn-padding-y,
       @btn-padding-x,
@@ -29,7 +32,7 @@
     }
   }
   
-  .btn-lg {
+  .eda-btn-lg {
     .button-size(
       @btn-padding-y-lg,
       @btn-padding-x-lg,
@@ -37,7 +40,7 @@
       @btn-border-radius-lg
     );
   }
-  .btn-sm {
+  .eda-btn-sm {
     .button-size(
       @btn-padding-y-sm,
       @btn-padding-x-sm,
@@ -46,27 +49,60 @@
     );
   }
   
-  .btn-primary {
-    .button-style(@primary, @primary, @white);
+  .eda-btn-primary {
+    // .button-style(@primary, @primary, @white);
+    border: 1px solid #999;
+    color: #999;
+    padding: 0 16px;
+    &:hover{
+      border: 1px solid #333;
+      color: #333;
+    }
   }
-  .btn-danger {
-    .button-style(@danger, @danger, @white);
+  .eda-btn-danger {
+    .button-style(@white, @danger, @danger);
+    &:hover{
+      color: @white;
+      background-color: @danger;
   }
-  .btn-warning {
-    .button-style(@warning, @warning, @white);
   }
-  .btn-default {
+  .eda-btn-success {
     .button-style(
       @white,
-      @gray-400,
-      @body-color,
+      @success,
+      @success,
       @white,
       @primary,
       @primary
     );
+    &:hover{
+      color: @white;
+      background-color: @success;
+  }
+  }
+  .eda-btn-warning {
+    .button-style(@warning, @warning, @white);
+    &:hover{
+      color: @white;
+      background-color: @danger;
+  }
+  }
+  .eda-btn-default {
+    .button-style(
+      @white,
+      #58f,
+      #58f,
+      @white,
+      #58f,
+      #58f
+    );
+    &:hover{
+      color: @white;
+      background-color: #58f;
+  }
   }
   
-  .btn-link {
+  .eda-btn-link {
     font-weight: @font-weight-normal;
     color: @btn-link-color;
     text-decoration: @link-decoration;

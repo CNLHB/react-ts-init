@@ -22,8 +22,6 @@ export const TabPane: FC<TabPaneProps> = (props) => {
     onChange,
     ...restProps
   } = props;
-  console.log(className);
-  
   const classes = classNames("tab-pane-wrap", className, {
   });
   const context = useContext(TabsContext);
@@ -36,8 +34,6 @@ export const TabPane: FC<TabPaneProps> = (props) => {
             return <div>{childElement}</div>
         })
     }
-    console.log(children);
-    
     return children
   };
 return (
