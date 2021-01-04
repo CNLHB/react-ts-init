@@ -47,12 +47,17 @@ export const Alert: FC<AlertProps> = (props) => {
     [`alert-${type}`]: type,
     [`alert-${position}`]: position,
     [`alert-none`]: !visibility,
+    "sm-font-size": !title
   });
+  const iconClasses = classNames("font-size", "", {
+    "sm-font-size": !title
+  });
+
   return (
     <div className={classes} {...restProps}>
       {showIcon?
             <div className="alert-type-icon">
-            <Icon className="font-size" type="" iconType={iconType[type]}></Icon>
+            <Icon className={iconClasses} type="" iconType={iconType[type]}></Icon>
           </div>:null  
       }
       <div className="alert-content">

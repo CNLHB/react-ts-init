@@ -5,7 +5,6 @@ import  {SelectContext} from './select'
 export interface BaseOptionProps {
   value: string;
 }
-
 type NativeOptionProps = BaseOptionProps & HTMLAttributes<HTMLElement>;
 //Partial 设置为可选属性
 export type OptionProps = Partial<NativeOptionProps>;
@@ -16,9 +15,7 @@ export const Option: FC<OptionProps> = (props) => {
       "eda-select-option": context.selectValue === value
   });
 
-  const clickHandle = (event:any)=>{
-    event.preventDefault();
-    event.stopPropagation();
+  const clickHandle = ()=>{
     if(context.onChange){
         context.onChange(value,children)
     }        
@@ -26,12 +23,12 @@ export const Option: FC<OptionProps> = (props) => {
 useEffect(()=>{
     if(context.selectValue === value&&context.onChange){
         context.onChange(value,children,"first")
-    }    
+    }  
 })
 
   return (
-            <li className={classes} {...restProps} onClick={(event:any)=>{
-                clickHandle(event)
+            <li className={classes}  {...restProps} onMouseDown={()=>{
+                clickHandle()
             }}>
                 {children}
             </li>

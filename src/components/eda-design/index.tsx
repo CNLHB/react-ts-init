@@ -1,5 +1,7 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export {Tag} from './tag/tag';
+export {Message} from './message/message';
 export { Textarea } from './textarea/textarea';
 export  {Button} from './button/button'
 export  {Menu} from './menu/menu'
@@ -16,5 +18,5 @@ export  {Avatar} from './avatar/avatar'
 export  {Mask} from './mask/mask';
 export { Modal } from './modal/modal';
 export {Spin} from './spin/spin';
-
+export {SubMenu} from './menu/subMenu';
 export  {Icon} from './icon/Icon'

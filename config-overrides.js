@@ -24,5 +24,6 @@ module.exports = override(
         '@': resolve('src'),
         "@components": resolve("src/components"),
         "@view": resolve("src/view"),
+        "@eda": resolve("src/components/eda-design")
     })
 )

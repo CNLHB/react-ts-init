@@ -33,6 +33,7 @@ export const Select: ParentSelect= (props) => {
   let [reverse, setReverse] = useState("");
   let [natValue, setNatValue] = useState(defaultValue?defaultValue:"");
   let [content, setContent] = useState("");
+  let [placeholder, setPlaceholderContent] = useState("");
   const classes = classNames("eda-select eda-select-inner", className, {
     "eda-select-disabled": disabled,
   });
@@ -52,6 +53,8 @@ export const Select: ParentSelect= (props) => {
   const handleClick = (value:string="",content:string="",type?:string)=>{
         setNatValue(value)
         setContent(content)
+        let contentValue = content
+        setPlaceholderContent(contentValue)
         if(onChange){
             onChange(value)
         }
@@ -64,11 +67,15 @@ export const Select: ParentSelect= (props) => {
     if(onFocus){
         onFocus()
     }
+    let contentValue = content
+    setPlaceholderContent(contentValue)
+    setContent("")
 }
-const blurHandle = ()=>{
+const blurHandle = (event:React.FocusEvent<HTMLDivElement>)=>{
     if(onBlur){
         onBlur()
     }
+    setReverse("");
 }
   const passedContext: ISelectContext = {
     onChange: handleClick,
@@ -77,8 +84,8 @@ const blurHandle = ()=>{
   };
   return (
     <SelectContext.Provider value={passedContext}>
-        <div className={classes} {...restProps}>
-        <Input value={content}  onChange={inputChange} onBlur={()=>{blurHandle()}} onFocus={()=>{focusHandle()}}></Input>
+        <div className={classes} {...restProps}  onBlur={(event:React.FocusEvent<HTMLDivElement>)=>{blurHandle(event)}}>
+        <Input value={content} placeholder={placeholder}  onChange={inputChange}  onFocus={()=>{focusHandle()}}></Input>
         <span
             onClick={(event) => {
                  clickHandle(event);
@@ -87,7 +94,7 @@ const blurHandle = ()=>{
         >
             <Icon type={`icon-jiantou`} iconType="jiantou"></Icon>
         </span>
-        <div className={`eda-select-dropdown ${reverse}`}>
+        <div className={`eda-select-dropdown ${reverse}`} >
             <div className="eda-dropdown__list">
                 {children}
             </div>

@@ -4,6 +4,7 @@ import './spin.less'
 import { Icon } from './../icon/Icon';
 export interface BaseSpinProps {
     className?: string;
+    tip?:string;
     spinning: boolean
 }
 type NativeSpinProps = BaseSpinProps;
@@ -12,6 +13,7 @@ export const Spin: React.FC<NativeSpinProps> = (props) => {
     const {
         className,
         spinning,
+        tip,
         children,
         ...restProps
     } = props;
@@ -23,6 +25,7 @@ export const Spin: React.FC<NativeSpinProps> = (props) => {
     return <div className={classes} {...restProps}>
                 <div className={loading}>
                        <Icon type="" className="eda-spin-dot eda-spin-dot-spin eda-spin-dot-spin-icon" iconType="loading1"></Icon>
+                       <span className="eda-spin-text">{tip}</span>
                 </div>
             <div className="eda-spin-container eda-spin-blur">
                 {children}

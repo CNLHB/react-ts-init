@@ -1,6 +1,5 @@
-import React, { FC, HTMLAttributes,useContext } from "react";
+import React, { FC, HTMLAttributes } from "react";
 import { classNames } from '../utils'
-import { TabsContext } from "./tabs";
 export interface BaseTabPaneProps {
   index?: string;
   className?: string;
@@ -24,7 +23,6 @@ export const TabPane: FC<TabPaneProps> = (props) => {
   } = props;
   const classes = classNames("tab-pane-wrap", className, {
   });
-  const context = useContext(TabsContext);
   const renderChildren = () => {
     if(Array.isArray(children)){
        return  children.map((item,index)=>{

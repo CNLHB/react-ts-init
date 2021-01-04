@@ -32,7 +32,7 @@ export const Modal = (props: NativeModalProps) => {
     const { className,visible,showClose,onCancelText,onOkText, title,position, children,onOk,onCancel, ...restProps } = props
     
     const [isShow,setVisible] = useState(false)
-    const classes = classNames("eda-modal", className, {
+    const classes = classNames(className,"eda-modal" , {
         ["eda-modal-"+position]: position
 
     })

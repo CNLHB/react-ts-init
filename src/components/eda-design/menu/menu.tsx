@@ -23,6 +23,8 @@ interface IMenuContext {
   defaultOpenSubMenus?: string[];
 }
 export const MenuContext = createContext<IMenuContext>({ index: "0" });
+
+
 export const Menu: ParentMenu = (props) => {
   const {
     className,
@@ -67,11 +69,13 @@ export const Menu: ParentMenu = (props) => {
     });
   };
   return (
-    <ul className={classes} style={style} data-testid="test-menu">
-      <MenuContext.Provider value={passedContext}>
-        {renderChildren()}
-      </MenuContext.Provider>
+      <div className="eda-menu-container">
+            <ul className={classes} style={style} data-testid="test-menu">
+          <MenuContext.Provider value={passedContext}>
+            {renderChildren()}
+          </MenuContext.Provider>
     </ul>
+      </div>
   );
 };
 Menu.defaultProps = {
