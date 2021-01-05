@@ -6,6 +6,8 @@ import SubMenu from './../../components/eda-design/menu/subMenu';
 import MenuItem from './../../components/eda-design/menu/menuItem';
 import { Icon } from './../../components/eda-design/icon/Icon';
 import Avatar from './../../components/eda-design/avatar/avatar';
+import { DropDownMenu } from './../../components/eda-design/dropdown/dropdownMenu';
+import { DropDown } from './../../components/eda-design/dropdown/dropdown';
 export default function Header(){
     return <header className="header">
             <div className="nav-left">
@@ -52,10 +54,16 @@ export default function Header(){
               <div className="nav-search">
               <Icon type="nc-u-search"></Icon>
               </div>
-              <div className="nav-notify">
+              <DropDown overlay={<DropDownMenu className="drop-menu">
+              1111111
+              <p>111</p>
+          </DropDownMenu>}>
+          <div className="nav-notify">
                     <span><Icon type="nc-u-notice-header"></Icon></span>
                     <Avatar size="sm" href="https://image.lceda.cn/avatars/2020/10/e36x5ZmcEpm2ibm91N30rs2CZoHeGz8Ew0eR6dKD.jpeg"></Avatar>
               </div>
+          </DropDown>
+
             </div>
     </header>
 }

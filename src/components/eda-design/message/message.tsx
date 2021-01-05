@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, {FC,  useState } from "react";
 import { classNames } from "../utils";
 import "./message.less";
 import Icon from "../icon/Icon";
@@ -7,6 +7,7 @@ export type PositionType = "left" | "top" | "bottom" | "right";
 interface IconType {
     [key: string]: string
 }
+
 const iconType: IconType = {
     "error": "Group-",
     "warning": "error",
@@ -79,5 +80,7 @@ export const Message: FC<MessageProps> = (props) => {
 Message.defaultProps = {
     type: "default",
 };
+
+
 
 export default Message;

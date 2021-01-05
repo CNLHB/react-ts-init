@@ -1,16 +1,21 @@
 import React ,{useState}from 'react'
 import sv from '../../logo.svg'
 import './index.less'
-import {Menu,SubMenu,Spin,Message,Modal,
+import {Menu,Spin,Message,Modal,
     Badge,Textarea,Switch,Alert,
-    Avatar,MenuItem,Tabs,TabPane
-    ,Input,Select, Button} from './../../components/eda-design/index';
+    Notification,
+    Avatar,MenuItem,Tabs,TabPane,
+    DropDown,DropDownMenu
+    ,Select, Button} from './../../components/eda-design/index';
 import { Option } from './../../components/eda-design/select/option';
 import Tag from './../../components/eda-design/tag/tag';
 export default function Test(){
    let [vis,setVis] = useState(false)
    let [spin,setSpin] = useState(false)
+
+//    Notification.open({message:"error",type:"error",duration:3})
     return <div>
+
           {/* <Menu
             // defaultIndex={"0"}
             // defaultOpenSubMenus={["1"]}
@@ -28,6 +33,14 @@ export default function Test(){
             <MenuItem>xxx2</MenuItem>
             <MenuItem>xxx3</MenuItem>
           </Menu> */}
+
+          <DropDown overlay={<DropDownMenu>
+              1111111
+              <p>111</p>
+          </DropDownMenu>}>
+              下拉列表
+          </DropDown>
+
           <div style={{marginTop:50}}></div>
           <Tag closable>tag1</Tag>
           <Tag type="danger">tag1</Tag>
@@ -63,6 +76,12 @@ export default function Test(){
     <Button style={{zIndex:9999}} onClick={()=>{
         if(vis){
             setVis(false)
+            Notification.open({message:"success"+Math.random(),
+            type:"success",duration:3})
+            Notification.open({message:"11"+Math.random(),
+            type:"error",
+            duration:0})
+
         }else{
             console.log(vis);
             setVis(true)
