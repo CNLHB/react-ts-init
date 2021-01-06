@@ -1,5 +1,6 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export {Breadcrumb} from './breadcrumb/breadcrumb';
 export { Notification } from './notification/notification';
 export { DropDown } from './dropdown/dropdown';
 export { DropDownMenu } from './dropdown/dropdownMenu';
@@ -22,5 +23,5 @@ export  {Mask} from './mask/mask';
 export { Modal } from './modal/modal';
 export {Spin} from './spin/spin';
 export {SubMenu} from './menu/subMenu';
-
+export {Label} from './label/label';    
 export  {Icon} from './icon/Icon'

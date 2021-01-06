@@ -2,7 +2,7 @@
 import React, { HTMLAttributes } from 'react'
 import './badge.less'
 import { classNames } from '../utils/index';
-export type AvatarType = "lg" | "ssm" | "sm" | "default" ;
+export type BadgeType = "lg" | "ssm" | "sm" | "default" ;
 
 interface IBadge {
     bgColor?:string,

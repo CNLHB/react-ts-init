@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes } from 'react'
+import React, {  InputHTMLAttributes } from 'react'
 import { classNames } from '../utils'
 import './input.less'
 type changeCallBack = (value: string) => void;

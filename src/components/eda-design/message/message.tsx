@@ -1,4 +1,4 @@
-import React, {FC,  useState } from "react";
+import React, {FC,  useState,CSSProperties } from "react";
 import { classNames } from "../utils";
 import "./message.less";
 import Icon from "../icon/Icon";
@@ -21,7 +21,10 @@ interface BaseMessageProps {
     message?: React.ReactNode;
     type?: MessageType;
     close: boolean;
+    style?:CSSProperties,
     children: React.ReactNode;
+    id:string,
+    closeCallback?:()=>void
 }
 //交叉类型
 type NativeMessageProps = BaseMessageProps;
@@ -38,6 +41,9 @@ export const Message: FC<MessageProps> = (props) => {
         className,
         children,
         close,
+        style,
+        id,
+        closeCallback,
         ...restProps
     } = props;
     // btn, btn-lg, btn-primary
@@ -52,7 +58,7 @@ export const Message: FC<MessageProps> = (props) => {
     });
     
     return (
-        <div className={classes} {...restProps}>
+        <div id={id} className={classes} style={style} {...restProps}>
             <div className="eda-type-icon">
                 <Icon className={iconClasses} type="" iconType={iconType[type]}></Icon>
             </div>
@@ -66,6 +72,7 @@ export const Message: FC<MessageProps> = (props) => {
                         <span
                             onClick={() => {
                                 setVisibility(false);
+                                closeCallback&&closeCallback()
                             }}>
                             <Icon className="font-size" type="" iconType="webicon309"></Icon>
                         </span>

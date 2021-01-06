@@ -5,17 +5,50 @@ import {Menu,Spin,Message,Modal,
     Badge,Textarea,Switch,Alert,
     Notification,
     Avatar,MenuItem,Tabs,TabPane,
+    Label,
+    Breadcrumb,
     DropDown,DropDownMenu
     ,Select, Button} from './../../components/eda-design/index';
 import { Option } from './../../components/eda-design/select/option';
 import Tag from './../../components/eda-design/tag/tag';
+import { Input } from './../../components/eda-design/input/input';
 export default function Test(){
    let [vis,setVis] = useState(false)
    let [spin,setSpin] = useState(false)
 
 //    Notification.open({message:"error",type:"error",duration:3})
     return <div>
+            <Breadcrumb>
+                <Breadcrumb.Item to="/aaa">Ant Design</Breadcrumb.Item>
+                <Breadcrumb.Item to="/aaa">Component</Breadcrumb.Item>
+                <Breadcrumb.Item>General</Breadcrumb.Item>
+            </Breadcrumb>
+                <div style={{width:500}}>
+                <Label name={"bitian"} required>
+                <Input></Input>
+            </Label>
+            <Label width={75} name="玄天:" 
+            position="left" >
+                <Input></Input>
+            </Label>
+                </div>
+            <Button onClick={()=>{
 
+                            Notification.open({message:"error"+Math.random(),
+                            type:"error",duration:3})
+            }}> 
+                notify
+            </Button>
+            <Button onClick={()=>{
+                            Notification.open({
+                                message:"success"+Math.random(),
+                            type:"success",duration:0,
+                            close:true
+                        })
+
+            }}> 
+                notify
+            </Button>
           {/* <Menu
             // defaultIndex={"0"}
             // defaultOpenSubMenus={["1"]}
@@ -76,11 +109,7 @@ export default function Test(){
     <Button style={{zIndex:9999}} onClick={()=>{
         if(vis){
             setVis(false)
-            Notification.open({message:"success"+Math.random(),
-            type:"success",duration:3})
-            Notification.open({message:"11"+Math.random(),
-            type:"error",
-            duration:0})
+
 
         }else{
             console.log(vis);
