@@ -7,7 +7,8 @@ import {Menu,Spin,Message,Modal,
     Avatar,MenuItem,Tabs,TabPane,
     Label,
     Breadcrumb,
-    DropDown,DropDownMenu
+    DropDown,DropDownMenu,
+    Pagination
     ,Select, Button} from './../../components/eda-design/index';
 import { Option } from './../../components/eda-design/select/option';
 import Tag from './../../components/eda-design/tag/tag';
@@ -18,6 +19,10 @@ export default function Test(){
 
 //    Notification.open({message:"error",type:"error",duration:3})
     return <div>
+
+            <Pagination total={50} onChange={()=>{
+
+            }}></Pagination>
             <Breadcrumb>
                 <Breadcrumb.Item to="/aaa">Ant Design</Breadcrumb.Item>
                 <Breadcrumb.Item to="/aaa">Component</Breadcrumb.Item>
@@ -32,6 +37,7 @@ export default function Test(){
                 <Input></Input>
             </Label>
                 </div>
+                <Button size="ssm">smm</Button>
             <Button onClick={()=>{
 
                             Notification.open({message:"error"+Math.random(),
@@ -77,7 +83,7 @@ export default function Test(){
           <div style={{marginTop:50}}></div>
           <Tag closable>tag1</Tag>
           <Tag type="danger">tag1</Tag>
-          <Tag type="info">tag1</Tag>
+          <Tag type="info" closable>tag1</Tag>
           <Tag type="success">tag1</Tag>
           <Tag type="warning">tag1</Tag>
           <div style={{marginTop:50}}></div>

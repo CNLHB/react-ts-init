@@ -40,7 +40,6 @@ export const Modal = (props: NativeModalProps) => {
         ...restProps
     } = props;
 
-    // const [isShow, setVisible] = useState(false);
     const classes1 = classNames("eda-modal eda-effect-16", className, {
         "eda-show": visible,
         ["eda-modal-" + position]: position,
@@ -48,9 +47,7 @@ export const Modal = (props: NativeModalProps) => {
     const classesOverlay = classNames("eda-overlay", "", {
         "eda-overlay-show": visible,
     });
-    // useEffect(() => {
-    //     setVisible(false);
-    // }, [visible]);
+
     const clickHandle = (type: string) => {
         if (type === ClickType.oK) {
             onOk && onOk();

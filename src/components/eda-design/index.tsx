@@ -23,5 +23,6 @@ export  {Mask} from './mask/mask';
 export { Modal } from './modal/modal';
 export {Spin} from './spin/spin';
 export {SubMenu} from './menu/subMenu';
-export {Label} from './label/label';    
+export {Label} from './label/label';
+export {Pagination} from './pagination/pagination'    
 export  {Icon} from './icon/Icon'
