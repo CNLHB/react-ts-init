@@ -25,4 +25,5 @@ export {Spin} from './spin/spin';
 export {SubMenu} from './menu/subMenu';
 export {Label} from './label/label';
 export {Pagination} from './pagination/pagination'    
+export {Table} from './table/table'    
 export  {Icon} from './icon/Icon'

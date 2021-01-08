@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react'
 import './notification.less'
-import Message,{MessageType} from '../message/message';
+import Message, { MessageType } from '../message/message';
 
 interface IMessage {
     type?: MessageType,
@@ -39,30 +39,32 @@ export const Notification = (function () {
             document.body.appendChild(notification)
         }
         const {
-              type,message,
+            type, message,
             close,
-            duration = 3 * 1000,
+            duration = 3,
             //   key, message, onClose, onClick, top, closable = true, closeIcon
         } = config
-        let wrap =  document.createElement("div")
+        let wrap = document.createElement("div")
         wrap.classList.add("eda-notify-message-fade-in")
-        let MessageJsx = (<Message closeCallback={()=>{
-            wrap&&wrap.remove()
+        let MessageJsx = (<Message closeCallback={() => {
+            wrap && wrap.remove()
         }} key={message + duration} type={type} close={close} message={message}></Message>)
         ReactDOM.render(MessageJsx, wrap)
         notification.appendChild(wrap)
+        console.log(duration);
+        
         if (duration !== 0) {
             let timer = setTimeout(() => {
                 if (wrap) {
                     wrap.classList.remove("eda-notify-message-fade-in")
                     wrap.classList.add("eda-notify-message-fade-out")
                     let time = setTimeout(() => {
-                        wrap&&wrap.remove()
+                        wrap && wrap.remove()
                         clearTimeout(time)
                     }, 300)
                 }
                 clearTimeout(timer)
-            }, (duration) * 1000)
+            }, duration * 1000)
         }
 
         return null;
