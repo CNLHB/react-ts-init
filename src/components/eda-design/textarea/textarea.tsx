@@ -8,6 +8,7 @@ export interface BaseTextareaProps {
     cols?:number;
     disabled?: true,
     className?: string;
+    resize?:boolean;
     onChangeInput?:changeCallBack
 }
 
@@ -20,13 +21,15 @@ export const Textarea: React.FC<TextareaProps> = (props) => {
         value,
         disabled,
         rows,
+        resize,
         cols=3,
         onChangeInput,
         ...restProps
     } = props;
     const [nativeValue,setNativeValue] = useState(value?value:'')
     const classes = classNames("eda-textarea-inner", className, {
-        'eda-input-disabled': disabled
+        'eda-input-disabled': disabled,
+        'eda-resize-disabled': !resize
     });
 
     const changHandle = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -37,7 +40,7 @@ export const Textarea: React.FC<TextareaProps> = (props) => {
         }
     }
     return <div className="eda-input-textarea">
-            <textarea value={nativeValue} onChange={(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
+            <textarea  value={nativeValue} onChange={(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
                 changHandle(event)
             }} rows={rows} cols={cols} {...restProps} className={classes}/>
     </div>

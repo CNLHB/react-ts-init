@@ -149,7 +149,10 @@ export default function Test() {
         </Breadcrumb>
         <div style={{ width: 500 }}>
             <Label name={"bitian"} required>
-                <Input></Input>
+                <Input onKeyUp={(event)=>{
+                    console.log(event.target);
+                    
+                }}></Input>
             </Label>
             <Label width={75} name="玄天:"
                 position="left" >
@@ -298,7 +301,7 @@ export default function Test() {
         <Avatar href={sv} border="true" size="lg"></Avatar>
         <Avatar href="https://image.lceda.cn/avatars/2020/10/e36x5ZmcEpm2ibm91N30rs2CZoHeGz8Ew0eR6dKD.jpeg"></Avatar>
 
-        <Textarea value="默认值" placeholder="请输入"></Textarea>
+        <Textarea resize={false} value="默认值" placeholder="请输入"></Textarea>
         {/* <Input className="my" placeholder="name" onChangeInput={(val:string)=>{console.log(val);
             }}></Input> */}
 
