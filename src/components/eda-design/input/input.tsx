@@ -1,6 +1,7 @@
-import React, {  InputHTMLAttributes } from 'react'
+import React, {  InputHTMLAttributes,useEffect } from 'react'
 import { classNames } from '../utils'
 import './input.less'
+import { useState } from 'react';
 type changeCallBack = (value: string) => void;
 export interface BaseInputProps {
     value?: string,
@@ -16,15 +17,19 @@ export type InputProps = Partial<NativeInputProps>;
 export const Input: React.FC<InputProps> = (props) => {
     const {
         className,
-        value,
+        value="",
         type,
         disabled,
         onChangeInput,
         ...restProps
     } = props;
+    let [val, setVal] = useState(value)
     const classes = classNames("eda-input-inner", className, {
         'eda-input-disabled': disabled
     });
+    useEffect(()=>{
+        setVal(value)
+    },[value])
     const changHandle = (event:React.ChangeEvent<HTMLInputElement>)=>{
         let value:string = event.target.value
         if(onChangeInput){
