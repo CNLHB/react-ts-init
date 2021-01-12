@@ -10,7 +10,9 @@ interface BaseDropDownProps {
     overlayStyle?: React.CSSProperties
     overlay?: React.ReactNode
     arrow?: string;
-    width?: number
+    width?: number;
+    positionClass?: string;
+    showArrow?: boolean
 }
 //交叉类型
 
@@ -20,24 +22,26 @@ export const DropDown: FC<BaseDropDownProps> = (props) => {
         disabled,
         children,
         overlay,
+        positionClass = "",
+        showArrow,
         ...restProps
     } = props;
     let [dropOpen, setDropOpen] = useState(false)
     const classes = classNames("eda-dropdown", className, {
     });
-    const classesMenu = classNames("eda-dropdown-list", "", {
-        "eda-dropdown-open":dropOpen
+    const classesMenu = classNames("eda-dropdown-list",positionClass, {
+        "eda-dropdown-open": dropOpen
     });
-    let timer:NodeJS.Timeout;
+    let timer: NodeJS.Timeout;
     return (
         <div className={classes}  {...restProps} onMouseEnter={() => {
             setDropOpen(true)
-            timer&&clearTimeout(timer)
+            timer && clearTimeout(timer)
         }} onMouseLeave={() => {
-            timer = setTimeout(()=>{
+            timer = setTimeout(() => {
                 setDropOpen(false)
                 clearTimeout(timer)
-            },50)
+            }, 50)
         }}>
             {children}
             <ul className={classesMenu}>

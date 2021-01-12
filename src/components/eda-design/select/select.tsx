@@ -19,24 +19,27 @@ export interface BaseSelectProps {
   type?: string;
   disabled?: true;
   className?: string;
+  placeholder?: string,
   onFocus?: changeCallBack;
   onBlur?: changeCallBack;
   onChange?: changeCallBack;
   onSearch?: changeCallBack;
+  onInput?: changeCallBack;
+  suffix?: React.ReactNode
 
 }
 type NativeSelectProps = BaseSelectProps
 //Partial 设置为可选属性
 export type SelectProps = Partial<NativeSelectProps>;
 export const Select: ParentSelect = (props) => {
-  const { className, defaultValue = "", type, disabled, onChange, onFocus, onBlur, onSearch, children, ...restProps } = props;
+  const { className, placeholder,onInput, suffix, defaultValue = "", type, disabled, onChange, onFocus, onBlur, onSearch, children, ...restProps } = props;
   let [reverse, setReverse] = useState("");
   let [natValue, setNatValue] = useState(defaultValue ? defaultValue : "");
   let [content, setContent] = useState("");
-  let [placeholder, setPlaceholderContent] = useState("");
   useEffect(() => {
     setNatValue(defaultValue)
   }, [defaultValue])
+
   const classes = classNames("eda-select eda-select-inner", className, {
     "eda-select-disabled": disabled,
   });
@@ -49,15 +52,19 @@ export const Select: ParentSelect = (props) => {
       setReverse("is-reverse");
     }
   };
-  const inputChange = () => {
-    setNatValue("")
-    setContent("")
+  const inputChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    if(suffix){
+      setContent(event.target.value)
+      onInput&&onInput(event.target.value)
+    }else{
+      setNatValue("")
+      setContent("")
+    }
+
   }
   const handleClick = (value: string = "", content: string = "", type?: string) => {
     setNatValue(value)
     setContent(content)
-    let contentValue = content
-    setPlaceholderContent(contentValue)
     if (onChange) {
       onChange(value)
     }
@@ -70,9 +77,6 @@ export const Select: ParentSelect = (props) => {
     if (onFocus) {
       onFocus()
     }
-    let contentValue = content
-    setPlaceholderContent(contentValue)
-    setContent("")
   }
   const blurHandle = (event: React.FocusEvent<HTMLDivElement>) => {
     if (onBlur) {
@@ -88,15 +92,18 @@ export const Select: ParentSelect = (props) => {
   return (
     <SelectContext.Provider value={passedContext}>
       <div className={classes} {...restProps} onBlur={(event: React.FocusEvent<HTMLDivElement>) => { blurHandle(event) }}>
-        <Input value={content} placeholder={placeholder} onChange={inputChange} onFocus={() => { focusHandle() }}></Input>
-        <span
+        <Input value={content} placeholder={placeholder}
+          onChange={inputChange}
+          onFocus={() => { focusHandle() }}></Input>
+        {suffix ? <span className="eda-input__base eda-input__suffix">{suffix}</span> : null}
+        {suffix ? null : <span
           onClick={(event) => {
             clickHandle(event);
           }}
           className={`eda-input__base eda-input__suffix ${reverse}`}
         >
           <Icon type={`icon-jiantou`} iconType="jiantou"></Icon>
-        </span>
+        </span>}
         <div className={`eda-select-dropdown ${reverse}`} >
           <div className="eda-dropdown__list">
             {children}

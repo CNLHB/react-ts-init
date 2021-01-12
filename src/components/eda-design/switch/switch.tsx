@@ -3,7 +3,7 @@ import { classNames } from '../utils'
 import './switch.less'
 type changeCallBack = (value: boolean) => void;
 export interface BaseSwitchProps {
-    defaultChecked ?: any,
+    defaultChecked ?: boolean,
     disabled?: true,
     className?: string;
     onChange?:changeCallBack

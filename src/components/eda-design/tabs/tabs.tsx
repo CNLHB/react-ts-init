@@ -1,4 +1,4 @@
-import React, { HTMLAttributes,useState,createContext } from "react";
+import React, { useState,createContext } from "react";
 import { classNames } from '../utils'
 import TabPane from './tabPane'
 import {TabPaneProps} from './tabPane'
@@ -21,7 +21,7 @@ interface BaseTabsProps {
   children: React.ReactNode;
 }
 //交叉类型
-type NativeTabsProps = BaseTabsProps & HTMLAttributes<HTMLElement>;
+type NativeTabsProps = BaseTabsProps 
 //Partial 设置为可选属性
 export type TabProps = Partial<NativeTabsProps>;
 export const Tabs: ParentTabs = (props) => {

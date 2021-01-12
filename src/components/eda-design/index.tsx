@@ -1,5 +1,6 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export { Cascader } from './cascader/cascader';
 export {Breadcrumb} from './breadcrumb/breadcrumb';
 export { Notification } from './notification/notification';
 export { DropDown } from './dropdown/dropdown';
@@ -27,3 +28,4 @@ export {Label} from './label/label';
 export {Pagination} from './pagination/pagination'    
 export {Table} from './table/table'    
 export  {Icon} from './icon/Icon'
+

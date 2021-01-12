@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes,useState } from 'react'
+import React, { TextareaHTMLAttributes,useState,useEffect } from 'react'
 import { classNames } from '../utils'
 import './textarea.less'
 type changeCallBack = (value: string) => void;
@@ -9,6 +9,8 @@ export interface BaseTextareaProps {
     disabled?: true,
     className?: string;
     resize?:boolean;
+    inputTextNullTip?: string,
+    showTip?: boolean,
     onChangeInput?:changeCallBack
 }
 
@@ -18,18 +20,25 @@ export type TextareaProps = Partial<NativeTextareaProps>;
 export const Textarea: React.FC<TextareaProps> = (props) => {
     const {
         className,
-        value,
+        value="",
         disabled,
         rows,
         resize,
+        showTip,
+        inputTextNullTip = "输入框不能为空",
         cols=3,
         onChangeInput,
         ...restProps
     } = props;
     const [nativeValue,setNativeValue] = useState(value?value:'')
+    let [textNull, setTextNull] = useState(false)
+    useEffect(() => {
+        setNativeValue(value)
+    }, [value]);
     const classes = classNames("eda-textarea-inner", className, {
         'eda-input-disabled': disabled,
-        'eda-resize-disabled': !resize
+        'eda-resize-disabled': !resize,
+        'eda-input-null': showTip&&textNull
     });
 
     const changHandle = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -42,7 +51,14 @@ export const Textarea: React.FC<TextareaProps> = (props) => {
     return <div className="eda-input-textarea">
             <textarea  value={nativeValue} onChange={(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
                 changHandle(event)
+            }} onBlur={()=>{
+                if (nativeValue === "") {
+                    setTextNull(true)
+                } else {
+                    setTextNull(false)
+                }
             }} rows={rows} cols={cols} {...restProps} className={classes}/>
+             {(showTip && textNull) ? <div className="inputTextNullTip">{inputTextNullTip}</div> : null}
     </div>
 }
 export default Textarea

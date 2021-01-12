@@ -1,7 +1,7 @@
 import React from 'react'
 import './pagination.less'
 import { Icon } from './../icon/Icon';
-import { classNames } from './../utils/index';
+// import { classNames } from './../utils/index';
 import { useState, useEffect } from 'react';
 enum MoreHandle {
     MORE = "more",
@@ -20,17 +20,19 @@ export interface IPagination {
 export const Pagination = (props: IPagination) => {
     const { defaultCurrent, current = 1, groupCount = 7, defaultPageSize = 20, pageSize = 20, total, onChange } = props
     let [currentPage, setCurrentPage] = useState(defaultCurrent ? defaultCurrent : current)
-    let [currentSize, setCurrentSize] = useState(defaultPageSize ? defaultPageSize : pageSize)
+    //setCurrentSize
+    let [currentSize, ] = useState(defaultPageSize ? defaultPageSize : pageSize)
     let [moreLeft, setMoreLeft] = useState("more")
     let [moreRight, setMoreRight] = useState("more")
-    let [pageNum, setPageNum] = useState(Math.ceil(total / currentSize))
+    //, setPageNum
+    let [pageNum] = useState(Math.ceil(total / currentSize))
     let [startPage, setStartPage] = useState(1)
     let [inputNum, setInputNum] = useState<string | number>(1)
 
     useEffect(() => {
         pageClick(current)
     }, [current])
-    let classesPrev = classNames("", "", {})
+    // let classesPrev = classNames("", "", {})
     const moreHandle = (type: MoreHandle, value: MoreHandle) => {
         if (type === MoreHandle.LEFT) {
             setMoreLeft(value)

@@ -16,10 +16,12 @@ type NativeAvatarProps = IAvatar & Partial<ImgHTMLAttributes<HTMLImageElement>>;
 
 export function Avatar(props: NativeAvatarProps) {
     const { className,size,border,alt="", href,...restProps } = props
+    // 设置头像大小的样式
     const classes = classNames("eda-avatar", className, {
         [size + "-avatar"]: size,
 
     })
+     // 设置头像边框的样式
     const classesWrap = classNames("eda-avatar-wrap", className, {
         "eda-border-avatar": border,
     })

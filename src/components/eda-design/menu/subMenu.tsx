@@ -1,10 +1,7 @@
-import React, { useContext, useState, FunctionComponentElement } from "react";
+import React, { useContext, useState } from "react";
 import {classNames} from "../utils/index";
 import { MenuContext } from "./menu";
 import { MenuItemProps } from "./menuItem";
-//import Icon from "../Icon/icon";
-//import Transition from "../Transition/transition";
-import { Icon } from './../icon/Icon';
  interface SubMenuProps {
   index?: string;
   title: string;

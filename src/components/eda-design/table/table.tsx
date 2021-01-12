@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import './table.less'
 import { classNames } from './../utils/index';
 import { IPagination, Pagination } from './../pagination/pagination';
