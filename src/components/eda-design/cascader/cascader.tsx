@@ -26,46 +26,63 @@ interface ICascaderProps {
 export const Cascader = (props: ICascaderProps) => {
     const { className, defaultValue = [], placeholder, separator = "-",
         options = [], onChange } = props
-    const [val, setVal] = useState("");
+    const [val, setVal] = useState("is-reverse");
     const [content, setContent] = useState<Array<string>>([]);
-    const divRef = useRef<HTMLDivElement>(null)
-    const finderContent = (defaultV: Array<string>, opts: IOption[]) => {
-        let item: string[] = [];
-        defaultV.forEach((itemValue, index) => {
-            opts.forEach((itemContent: IOption) => {
-                if (itemContent.value === itemValue) {
-                    item.push(itemContent.label)
-                    opts = itemContent.children ? itemContent.children : []
-                }
-            })
-        })
-        return item
-    }
-    const setInputVal = () => {
-        let item = finderContent(defaultValue, options)
-        setContent(item)
-        setVal(item.join(separator))
-
-    }
+    const [selList, setSelList] = useState<Array<Array<IOption>>>([]);
     const [num, setNum] = useState(defaultValue.length > 0 ? defaultValue.length : 1);
     const [optionList, setOptionList] = useState(options)
     let [reverse, setReverse] = useState("");
     let [defaultVal, setDefaultVal] = useState(defaultValue);
     const classes = classNames("eda-cascader", className, {
     })
+    const divRef = useRef<HTMLDivElement>(null)
+    const finderContent = (defaultV: Array<string>, opts: IOption[]) => {
+        let item: string[] = [];
+        let options:Array<Array<IOption>> = []
+        defaultV.forEach((itemValue, index) => {
+            let op:Array<IOption> = []
+            let flag = false
+            if(index===0){
+                flag = true
+            }
+            opts.forEach((itemContent: IOption) => {
+                op.push(itemContent)
+                if (itemContent.value === itemValue) {
+                    flag = true
+                    item.push(itemContent.label)
+                    opts = itemContent.children ? itemContent.children : []
+                }
+            })
+            if(flag){
+                options.push(op)
+                index===defaultVal.length-1&&options.push(opts)
+                
+            }
+        })
+        setSelList(options)
+        return item
+    }
+
+    const setInputVal = () => {
+        let item = finderContent(defaultValue, options)
+        setContent(item)
+        setVal(item.join(separator))
+
+    }
+
     useEffect(() => {
         setOptionList(options)
         setInputVal()
     }, [options]);
     useEffect(() => {
-
+        
     }, [num]);
     const focusHandle = () => {
         divRef.current?.focus()
         setReverse("is-reverse");
     }
     const blurHandle = () => {
-        setReverse("");
+        // setReverse("");
     }
     const clickItem = (val: string, label: string, ind: number, child: IOption[] = []) => {
         let newVal = [...defaultVal]
@@ -76,6 +93,9 @@ export const Cascader = (props: ICascaderProps) => {
         conList[ind] = label
         conList.length = ++ind
         setContent(conList)
+        console.log(newVal);
+        
+        finderContent(newVal, options)
         if (child.length !== 0) {
             setNum(ind)
         }
@@ -85,12 +105,13 @@ export const Cascader = (props: ICascaderProps) => {
                 path: newVal,
                 val: conList.join(separator)
             })
-            setReverse("");
+            // setReverse("");
         }
 
 
     }
     const renderOption = (list: IOption[], ind: number = 0) => {
+        
         return <div className="eda-cascader-menu">{
             list.map((item) => {
                 return <div key={item.value}><div onMouseDown={() => {
@@ -99,12 +120,31 @@ export const Cascader = (props: ICascaderProps) => {
                     <span className="eda-cascader-node__label">{item.label}</span>
                     {item.children ? <span className="eda-cascader-node__postfix">&gt;</span> : null}
                 </div>
-                    {item.children ? <div className={`eda-cascader-sub-menu ${item.value === defaultVal[ind] ? "eda-cascader-item-open" : ""}`}>{renderOption(item.children, ind + 1)}</div> : null}
+                    {item.children ? <div  className={`eda-cascader-sub-menu ${item.value === defaultVal[ind] ? "eda-cascader-item-open" : ""}`}>{renderOption(item.children, ind + 1)}</div> : null}
                 </div>
             })
         }
         </div>
     }
+    const renderOptionOne = (list: IOption[][], ind: number = 0)=>{
+        return list.map((items,index:number)=>{
+               return <div key={index} className="eda-cascader-menu" style={{left: index*180}}>
+                   {
+                       items.map((item)=>{
+                        return <div key={item.value}><div onMouseDown={() => {
+                        clickItem(item.value, item.label, index, item.children)
+                    }} className={`eda-cascader-dropdown__item ${item.value === defaultVal[ind] ? " eda-cascader-item-active" : ""}`}>
+                        <span className="eda-cascader-node__label">{item.label}</span>
+                        {item.children ? <span className="eda-cascader-node__postfix">&gt;</span> : null}
+                    </div>
+                        {/* {item.children ? <div  className={`eda-cascader-sub-menu ${item.value === defaultVal[ind] ? "eda-cascader-item-open" : ""}`}>{renderOption(item.children, ind + 1)}</div> : null} */}
+                    </div>
+                   }) 
+                   }
+               </div>      
+        })
+    }
+
     return (
         <div className={classes}
             tabIndex={1}
@@ -127,10 +167,13 @@ export const Cascader = (props: ICascaderProps) => {
             <div className={`eda-cascader-dropdown ${reverse}`} >
                 <div className="eda-dropdown__list" style={{ width: num * 180 }}>
                     {
-                        options.length>0?renderOption(optionList):<div className="eda-cas__empty-block">
+                        options.length>0?
+                        renderOptionOne(selList):
+                        // renderOption(optionList):
+                        <div className="eda-cas__empty-block">
                         <span className="eda-cas__empty-text">
                             暂无数据
-                            </span>
+                        </span>
                     </div> 
                     }
                 </div>

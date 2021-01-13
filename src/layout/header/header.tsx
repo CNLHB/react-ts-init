@@ -8,6 +8,7 @@ import { Icon } from './../../components/eda-design/icon/Icon';
 import Avatar from './../../components/eda-design/avatar/avatar';
 import { DropDownMenu } from './../../components/eda-design/dropdown/dropdownMenu';
 import { DropDown } from './../../components/eda-design/dropdown/dropdown';
+
 export default function Header(){
     return <header className="header">
             <div className="nav-left">

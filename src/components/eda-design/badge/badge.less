@@ -1,3 +1,5 @@
+
+@import "../styles/variables.less";
 .eda-badge{
     position: relative;
     display: inline-block;
@@ -9,16 +11,16 @@
         z-index: auto;
         min-width: 18px;
         height: 18px;
-        color: #fff;
+        color: @white;
         font-weight: 400;
         font-size: 12px;
         line-height: 18px;
         white-space: nowrap;
         text-align: center;
-        background: #ff4d4f;
+        background: @red-400;
         border-radius: 50%;
-        -webkit-box-shadow: 0 0 0 1px #fff;
-        box-shadow: 0 0 0 1px #fff;
+        -webkit-box-shadow: 0 0 0 1px @white;
+        box-shadow: 0 0 0 1px @white;
     }
     .eda-count-overflow{
         padding: 0 6px;

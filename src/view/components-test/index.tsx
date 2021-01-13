@@ -320,7 +320,7 @@ export default function Test() {
             setOpts(option)
         ]}>opt</Button>
         <div style={{width:500}}>
-            <Cascader options={opts} 
+            <Cascader options={option} 
             defaultValue={["zhinan","shejiyuanze","yizhi"]}
             placeholder="提示信息"
             onChange={(val:any)=> {
