@@ -4,7 +4,7 @@
     position: relative;
     display: inline-block;
     font-weight: @btn-font-weight;
-    line-height: @btn-line-height;
+    line-height: 1;
     color: @body-color;
     white-space: nowrap;
     text-align: center;
@@ -42,6 +42,7 @@
   }
 
   .eda-btn-sm {
+
     .button-size(
       @btn-padding-y-sm,
       @btn-padding-x-sm,
@@ -110,7 +111,25 @@
       background-color: @blue;
   }
   }
-  
+
+  .eda-btn-action {
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    // .button-style(
+    //   @white,
+    //   @blue,
+    //   @blue,
+    //   @white,
+    //   @blue,
+    //   @blue
+    // );
+    &:hover{
+      color: @blue-100;;
+      border-color: #c6e2ff;
+      background-color: #ecf5ff;
+  }
+  }
   .eda-btn-link {
     font-weight: @font-weight-normal;
     color: @btn-link-color;

@@ -7,8 +7,7 @@
     .eda-dropdown-list{
         display: none;
         position: absolute;
-        top: 90%;
-        right: 0px;
+        top: 100%;
         z-index: 555;
         max-height: 290px;
         border: 1px solid #e4e7ed;
@@ -30,6 +29,20 @@
             border: 5px solid transparent;
             border-bottom: 5px solid #f9f9f9;
             z-index: 556;
+        }
+        &.eda-dropdown-left{
+            left: 0;
+            &::before{
+                left: 20%;
+                transform: translateX(-50%);
+            }
+        }
+        &.eda-dropdown-center{
+            left: 0;
+            transform: translateX(-50%);
+        }
+        &.eda-dropdown-right{
+            right: 0;
         }
     }
     .eda-dropdown-open{

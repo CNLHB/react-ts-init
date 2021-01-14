@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { classNames } from '../utils'
 import './dropdown.less'
-
+type IPosition = "center" | "left" | "right"
 interface BaseDropDownProps {
     className?: string;
     disabled?: boolean;
@@ -12,7 +12,8 @@ interface BaseDropDownProps {
     arrow?: string;
     width?: number;
     positionClass?: string;
-    showArrow?: boolean
+    showArrow?: boolean,
+    position?: IPosition
 }
 //交叉类型
 
@@ -23,14 +24,16 @@ export const DropDown: FC<BaseDropDownProps> = (props) => {
         children,
         overlay,
         positionClass = "",
+        position="center",
         showArrow,
         ...restProps
     } = props;
     let [dropOpen, setDropOpen] = useState(false)
     const classes = classNames("eda-dropdown", className, {
     });
-    const classesMenu = classNames("eda-dropdown-list",positionClass, {
-        "eda-dropdown-open": dropOpen
+    const classesMenu = classNames("eda-dropdown-list", positionClass, {
+        "eda-dropdown-open": dropOpen,
+        ["eda-dropdown-" + position]: position,
     });
     let timer: NodeJS.Timeout;
     return (

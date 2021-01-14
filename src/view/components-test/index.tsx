@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect,useLayoutEffect } from 'react'
 import sv from '../../logo.svg'
 import './index.less'
 import {
@@ -11,6 +11,8 @@ import {
     DropDown, DropDownMenu,
     Pagination,
     Table,
+    SubMenu,
+    Radio,
     Cascader
     , Select, Button, Icon
 } from './../../components/eda-design/index';
@@ -315,7 +317,46 @@ export default function Test() {
             key: 'integralValue',
         },
     ];
+    useEffect(()=>{
+      console.log("useEffect");
+      
+    },[])
+    useLayoutEffect(()=>{
+      console.log("useLayoutEffect");
+    },[])
     return <div>
+      <div style={{margin:"50px 50px"}}>
+      <Radio defaultValue="child" buttonStyle="solid" onChange={(val:string)=>{
+          console.log(val);
+      }}>
+          <Radio.Item value={"child"}> child </Radio.Item>
+          <Radio.Item value={"child1"}> child1 </Radio.Item>
+          <Radio.Item value={"child2"}> child2 </Radio.Item>
+      </Radio>
+      </div>
+              {/* <Menu
+              style={{width:300,height:700}}
+            // defaultIndex={"0"}
+            // defaultOpenSubMenus={["1"]}
+            mode="vertical"
+            onSelect={(index: string) => {
+              console.log(index);
+            }}
+            // activeClass="menu-active-item"
+          >
+            <Menu.MenuItem icon={<Icon type="" iconType="error"></Icon>}>产品</Menu.MenuItem>
+            <SubMenu title="dropdown">
+              <MenuItem>dropdown1</MenuItem>
+              <SubMenu title="dropdown1">
+                <MenuItem>dropdown21</MenuItem>
+                <MenuItem>dropdown22</MenuItem>
+              </SubMenu>
+            </SubMenu>
+            <MenuItem>11111</MenuItem>
+            <MenuItem>xxx2</MenuItem>
+            <MenuItem>xxx3</MenuItem>
+          </Menu>
+          <div>1</div> */}
         <Button onClick={()=>[
             setOpts(option)
         ]}>opt</Button>
@@ -394,23 +435,10 @@ export default function Test() {
         }}>
             notify
             </Button>
-        {/* <Menu
-            // defaultIndex={"0"}
-            // defaultOpenSubMenus={["1"]}
-            mode="horizontal"
-            onSelect={(index: string) => {
-              console.log(index);
-            }}
-          >
-            <Menu.MenuItem>产品</Menu.MenuItem>
-            <SubMenu title="dropdown">
-              <MenuItem>dropdown1</MenuItem>
-              <MenuItem>dropdown2</MenuItem>
-            </SubMenu>
-            <MenuItem>11111</MenuItem>
-            <MenuItem>xxx2</MenuItem>
-            <MenuItem>xxx3</MenuItem>
-          </Menu> */}
+            <style>
+
+            </style>
+
 
         <DropDown overlay={<DropDownMenu>
             1111111
@@ -418,7 +446,18 @@ export default function Test() {
         </DropDownMenu>}>
             下拉列表
           </DropDown>
-
+          <DropDown position="left" overlay={<DropDownMenu>
+            1111111
+              <p>111</p>
+        </DropDownMenu>}>
+            下拉列表
+          </DropDown>
+          <DropDown position="right" overlay={<DropDownMenu>
+            1111111
+              <p>111</p>
+        </DropDownMenu>}>
+            下拉列表
+          </DropDown>
         <div style={{ marginTop: 50 }}></div>
         <Tag closable>tag1</Tag>
         <Tag type="danger">tag1</Tag>
@@ -453,6 +492,7 @@ export default function Test() {
             showIcon
             close
             message="当前账号尚未激活邮箱，无法开启邮件提醒功能"></Alert>
+        <Button size="sm" btnType="action">开启</Button>
         <Button style={{ zIndex: 9999 }} onClick={() => {
             if (vis) {
                 setVis(false)
@@ -563,7 +603,7 @@ export default function Test() {
                 <Option value="name4">name4title</Option>
             </Select>
         </div>
-        <Menu
+        {/* <Menu
             defaultIndex={"0"}
             defaultOpenSubMenus={["1"]}
             mode="vertical"
@@ -575,7 +615,7 @@ export default function Test() {
             <Menu.MenuItem>1</Menu.MenuItem>
             <MenuItem>xxx2</MenuItem>
             <MenuItem>xxx3</MenuItem>
-        </Menu>
+        </Menu> */}
         <Tabs defaultActiveKey="0" onChange={(t: string) => { }}>
             <TabPane className="name" tab="Tab 1" key="1">
                 Content of Tab Pane 1

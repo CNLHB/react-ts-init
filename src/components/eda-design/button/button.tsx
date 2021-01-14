@@ -2,7 +2,7 @@ import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 import { classNames } from '../utils'
 import './button.less'
 export type ButtonSize = "lg" | "sm" | "ssm";
-export type ButtonType = "primary" | "default" |"success"| "danger" | "link" | "warning";
+export type ButtonType = "primary" | "default" |"success"| "danger" | "link" | "warning"|"action";
 
 interface BaseButtonProps {
   className?: string;

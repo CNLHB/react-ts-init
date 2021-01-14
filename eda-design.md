@@ -22,6 +22,38 @@
 
 ![image-20210111101544205](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210111101544205.png)
 
+
+
+## Menu菜单
+
+| 参数        | 说明                                                         | 类型       | 默认值                                    | 版本 |
+| :---------- | :----------------------------------------------------------- | :--------- | :---------------------------------------- | :--- |
+| description | 警告提示的辅助性文字介绍                                     | ReactNode  | -                                         | 1.0  |
+| message     | 警告提示内容                                                 | ReactNode  | -                                         | 1.0  |
+| showIcon    | 是否显示辅助图标                                             | boolean    | false                                     | 1.0  |
+| type        | 指定警告提示的样式，有四种选择 `success`、`info`、`warning`、`error` | string     | `info`，`banner` 模式下默认值为 `warning` | 1.0  |
+| onClose     | 关闭时触发的回调函数                                         | () => void | -                                         | 1.0  |
+
+
+
+```tsx
+<Alert 
+    title="警告"
+    type="error"
+    message="删除账号前请先解散或转移你的团队和工程。 该操作不可恢复！删除账号仅对立创EDA上的账号与数据进行删除， 如果需要删除立创商城/嘉立创账号请联系立创商城或嘉立创。"></Alert>
+           
+<Alert
+    type="error"
+    showIcon
+    close
+    message="当前账号尚未激活邮箱，无法开启邮件提醒功能">
+</Alert>
+```
+
+![image-20210111101601437](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210111101601437.png)
+
+
+
 ## Alert提醒框使用
 
 | 参数        | 说明                                                         | 类型       | 默认值                                    | 版本 |
@@ -110,7 +142,8 @@
 | 参数          | 说明                     | 类型         | 默认值 | 版本 |
 | :------------ | :----------------------- | :----------- | :----- | :--- |
 | overlay       | menu项，暂定包裹全部元素 | DropDownMenu |        | 1.0  |
-| positionClass | 下拉菜单定位类名         |              |        |      |
+| position      | menu位置                 | IPosition    | center | 1.0  |
+| positionClass | 下拉菜单定位类名         |              |        | 1.0  |
 
 ### DropDownMenu
 
@@ -121,6 +154,7 @@
 
 
 ```tsx
+type IPosition = "center" | "left" | "right"
 
 <DropDown overlay={
         <DropDownMenu className="drop-menu">
@@ -662,3 +696,32 @@ interface IColumns {
 ```
 
 ![image-20210111150959992](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210111150959992.png)
+
+# Radio单选框
+
+| 参数         | 说明                                   | 类型                    | 默认值  | 版本 |
+| :----------- | :------------------------------------- | :---------------------- | :------ | :--- |
+| buttonStyle  | 按钮类型  outline\|solid               | buttonStyle             | outline | 1.0  |
+| defaultValue | 默认传入的value值                      | any                     |         | 1.0  |
+| value        | value值,可通知此值进行动态改变选中状态 | any                     |         | 1.0  |
+| onChange     | value改变事件                          | (value: string) => void |         | 1.0  |
+
+
+
+```tsx
+      <Radio defaultValue="child" onChange={(val:string)=>{
+          console.log(val);
+      }}>
+          <Radio.Item value={"child"}> child </Radio.Item>
+          <Radio.Item value={"child1"}> child1 </Radio.Item>
+          <Radio.Item value={"child2"}> child2 </Radio.Item>
+      </Radio>
+```
+
++ outline
+
+![image-20210114200133564](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210114200133564.png)
+
++ solid
+
+![image-20210114200205992](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210114200205992.png)

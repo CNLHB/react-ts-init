@@ -1,5 +1,6 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export { Radio } from './radio/radio';
 export { Cascader } from './cascader/cascader';
 export {Breadcrumb} from './breadcrumb/breadcrumb';
 export { Notification } from './notification/notification';
@@ -26,6 +27,6 @@ export {Spin} from './spin/spin';
 export {SubMenu} from './menu/subMenu';
 export {Label} from './label/label';
 export {Pagination} from './pagination/pagination'    
-export {Table} from './table/table'    
+export {Table} from './table/table' 
 export  {Icon} from './icon/Icon'
 
