@@ -2,7 +2,7 @@
 import React, { HTMLAttributes } from 'react'
 import './breadcrumb.less'
 import { classNames } from '../utils/index';
-
+import {Link} from 'react-router-dom'
 interface IBreadcrumbItem {
     className?: string,
     separator?:React.ReactNode,
@@ -25,7 +25,7 @@ export function BreadcrumbItem(props: NativeBreadcrumbItemProps) {
 
     return (<div className={classes} {...restProps}>
                 <span className={classesItem}>
-                    {to?<a href={to}>{children}</a>:children}
+                    {to?<Link to={to}>{children}</Link>:children}
                 </span>{separator?<span className="eda-breadcrumb-separator">{separator}</span>:null}
     </div>)
 }

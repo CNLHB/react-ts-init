@@ -12,15 +12,18 @@ interface IColumns {
 interface IDataSource {
     [key: string]: any
 }
-
+interface IRender {
+    [key: string]: any
+}
 interface ITableProps {
     columns: IColumns[];
     dataSource: IDataSource[];
     children?: ReactNode,
     stripe?: boolean,
-    loading?:boolean,
+    loading?: boolean,
     pagination?: IPagination,
-    onRow?:(record:any)=>{
+    scroll?:{x?:boolean,y?:boolean};
+    onRow?: (record: any) => {
         // onClick: event => {}, // 点击行
         // onDoubleClick: event => {},
         // onContextMenu: event => {},
@@ -31,10 +34,11 @@ interface ITableProps {
 }
 
 export const Table = (props: ITableProps) => {
-    const { columns, dataSource, stripe ,pagination} = props
+    const { columns, dataSource, scroll,stripe, pagination } = props
     let classTr = classNames("", "", {
         "eda-table-row-stripe": stripe
     })
+
     const renderHeader = (columns: IColumns[]) => {
         let jsxHeader = (<tr>{columns.map((item: IColumns) => {
             return <th className="is-leaf" style={{ width: item.width }} key={item.title}>
@@ -46,19 +50,24 @@ export const Table = (props: ITableProps) => {
         return jsxHeader
     }
     const renderBody = (dataSource: IDataSource[]) => {
+        let renderList: IRender = {
+
+        }
         const keys = columns.map((item) => {
+            renderList[item.key] = item.render
             return item.key
         })
+
         return dataSource.map((item: IDataSource, index: number) => {
             return <tr className={classTr} key={item.key}>
-                {keys.map((key:string,index:number) => {
+                {keys.map((key: string, index: number) => {
                     return <td className="is-leaf" key={index}>
-                        <div className="cell margin-cell">{item[key]}</div></td>
+                        <div className="cell margin-cell">{renderList[key] ? renderList[key](item[key]) : item[key]}</div></td>
                 })}
             </tr>
         })
     }
-    return <div className="eda-table">
+    return <div className="eda-table" style={{overflowX:scroll?.x?"scroll":"inherit"}}>
         <table className="eda-table-wrapper" cellSpacing="0" cellPadding="0" >
             <thead className="has-gutter">
                 {renderHeader(columns)}
@@ -72,7 +81,7 @@ export const Table = (props: ITableProps) => {
                 暂无数据
                 </span>
         </div> : null}
-        {pagination?<Pagination {...pagination}></Pagination>:null}
+        {pagination ? <Pagination {...pagination}></Pagination> : null}
 
     </div>
 }

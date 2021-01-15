@@ -13,7 +13,8 @@ import {
     Table,
     SubMenu,
     Radio,
-    Cascader
+    Cascader,
+    EdaMenu
     , Select, Button, Icon
 } from './../../components/eda-design/index';
 import { Option } from './../../components/eda-design/select/option';
@@ -23,7 +24,7 @@ const dataSource = [
     {
         key: '1',
         account: '1',
-        action: "兑换优惠卷",
+        action: "兑换优惠xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx卷",
         time: 'time',
         integralChange: '-1',
         integralValue: '1',
@@ -32,8 +33,8 @@ const dataSource = [
         key: '2',
         account: '2',
         action: 32,
-        time: '西湖区湖底公园1号',
-        integralChange: '西湖区湖底公园1号',
+        time: '西湖区湖xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx底公园1号',
+        integralChange: '西湖xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx区湖底公园1号',
         integralValue: '西湖区湖底公园1号',
     },
     {
@@ -293,12 +294,19 @@ export default function Test() {
             title: '序号',
             dataIndex: 'account',
             key: 'account',
+            render:(item:any)=>{
+              console.log(item);
+              return <div>{item}</div>
+            }
         },
         {
             title: '操作',
             dataIndex: 'action',
             key: 'action',
-            width: 200
+            width: 200,
+            render:(item:any)=>{
+              return <Button btnType="action">{item}</Button>
+            }
         },
         {
             title: '操作时间',
@@ -326,17 +334,21 @@ export default function Test() {
     },[])
     return <div>
       <div style={{margin:"50px 50px"}}>
-      <Radio defaultValue="child" buttonStyle="solid" onChange={(val:string)=>{
+      <Radio defaultValue="child" onChange={(val:string)=>{
           console.log(val);
       }}>
           <Radio.Item value={"child"}> child </Radio.Item>
           <Radio.Item value={"child1"}> child1 </Radio.Item>
           <Radio.Item value={"child2"}> child2 </Radio.Item>
       </Radio>
+      
+
+
+
       </div>
-              {/* <Menu
-              style={{width:300,height:700}}
-            // defaultIndex={"0"}
+              <EdaMenu
+              style={{width:300,height:700,"backgroundColor": " #f5f5f5"}}
+            defaultIndex={"0"}
             // defaultOpenSubMenus={["1"]}
             mode="vertical"
             onSelect={(index: string) => {
@@ -344,19 +356,27 @@ export default function Test() {
             }}
             // activeClass="menu-active-item"
           >
-            <Menu.MenuItem icon={<Icon type="" iconType="error"></Icon>}>产品</Menu.MenuItem>
-            <SubMenu title="dropdown">
-              <MenuItem>dropdown1</MenuItem>
-              <SubMenu title="dropdown1">
-                <MenuItem>dropdown21</MenuItem>
-                <MenuItem>dropdown22</MenuItem>
-              </SubMenu>
-            </SubMenu>
-            <MenuItem>11111</MenuItem>
-            <MenuItem>xxx2</MenuItem>
-            <MenuItem>xxx3</MenuItem>
-          </Menu>
-          <div>1</div> */}
+            <EdaMenu.MenuItem icon={<Icon type=""
+             iconType="error"></Icon>}>产品</EdaMenu.MenuItem>
+            <EdaMenu.SubItem title="产品1" icon={<Icon type=""
+             iconType="error"></Icon>}>
+              <EdaMenu.MenuItem>产品2</EdaMenu.MenuItem>
+              <EdaMenu.SubItem title="产品3">
+                <EdaMenu.MenuItem>产品4</EdaMenu.MenuItem>
+                <EdaMenu.MenuItem>产品5</EdaMenu.MenuItem>
+              </EdaMenu.SubItem>
+            </EdaMenu.SubItem>
+            <EdaMenu.SubItem title="产品6">
+              <EdaMenu.MenuItem>产品7</EdaMenu.MenuItem>
+              <EdaMenu.SubItem title="产品8">
+                <EdaMenu.MenuItem>产品9</EdaMenu.MenuItem>
+                <EdaMenu.MenuItem>产品10</EdaMenu.MenuItem>
+              </EdaMenu.SubItem>
+            </EdaMenu.SubItem>
+            <EdaMenu.MenuItem >产品11</EdaMenu.MenuItem>
+            <EdaMenu.MenuItem>产品12</EdaMenu.MenuItem>
+            <EdaMenu.MenuItem>产品13</EdaMenu.MenuItem>
+          </EdaMenu>
         <Button onClick={()=>[
             setOpts(option)
         ]}>opt</Button>

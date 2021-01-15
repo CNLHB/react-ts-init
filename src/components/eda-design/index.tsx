@@ -1,5 +1,6 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export { EdaMenu } from './eda-menu/edaMenu';
 export { Radio } from './radio/radio';
 export { Cascader } from './cascader/cascader';
 export {Breadcrumb} from './breadcrumb/breadcrumb';

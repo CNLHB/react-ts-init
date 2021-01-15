@@ -697,14 +697,14 @@ interface IColumns {
 
 ![image-20210111150959992](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210111150959992.png)
 
-# Radio单选框
+## Radio单选框
 
-| 参数         | 说明                                   | 类型                    | 默认值  | 版本 |
-| :----------- | :------------------------------------- | :---------------------- | :------ | :--- |
-| buttonStyle  | 按钮类型  outline\|solid               | buttonStyle             | outline | 1.0  |
-| defaultValue | 默认传入的value值                      | any                     |         | 1.0  |
-| value        | value值,可通知此值进行动态改变选中状态 | any                     |         | 1.0  |
-| onChange     | value改变事件                          | (value: string) => void |         | 1.0  |
+| 参数         | 说明                                       | 类型                    | 默认值  | 版本 |
+| :----------- | :----------------------------------------- | :---------------------- | :------ | :--- |
+| buttonStyle  | 按钮类型  outline\|solid                   | buttonStyle             | outline | 1.0  |
+| defaultValue | 默认传入的value值                          | any                     |         | 1.0  |
+| value        | value值,外部可通过此值进行动态改变选中状态 | any                     |         | 1.0  |
+| onChange     | value改变事件，Item的value                 | (value: string) => void |         | 1.0  |
 
 
 
@@ -725,3 +725,4 @@ interface IColumns {
 + solid
 
 ![image-20210114200205992](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210114200205992.png)
+
