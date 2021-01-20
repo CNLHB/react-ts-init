@@ -2,29 +2,43 @@ import React, { useContext, useState, useEffect } from "react";
 import { classNames } from "../utils/index";
 import { MenuContext } from "./edaMenu";
 import { MenuItemProps } from "./edaMenuItem";
+import { useHistory } from "react-router-dom";
 export interface SubMenuProps {
     index?: string;
     title: string;
     icon?: React.ReactNode;
     className?: string;
+    activeClass?: string,
+    hoverClass?: string,
+    openMode?: string;
+    to?:string
 }
-export const SubMenu: React.FC<SubMenuProps> = ({
-    index = "0",
-    title,
-    icon,
-    children,
-    className,
-}) => {
+export const SubMenu: React.FC<SubMenuProps> = (props) => {
+    const {
+        index = "0",
+        title,
+        icon,
+        children,
+        className,
+        activeClass,
+        hoverClass,
+        to="",
+        // openMode
+    } = props
+    const history = useHistory();
     const context = useContext(MenuContext);
-    const openedSubMenus = context.defaultOpenSubMenus as Array<string>;
-    const [subIndex, setSubIndex] = useState(context.subIndex)
-    useEffect(()=>{
-        setSubIndex(context.subIndex)
-    },[context.subIndex])
+    useEffect(() => {
+        setOpen(context.index?.startsWith(index))
+    }, [context.index])
+    useEffect(() => {
+        setOpen(context.subIndex?context.subIndex.startsWith(index):false)
+    }, [context.subIndex])
+
     const isOpend =
         index && context.mode === "vertical"
-            ? subIndex?.startsWith(index)
+            ? context.index?.startsWith(index)
             : false;
+
     const [menuOpen, setOpen] = useState(isOpend);
     const classes = classNames("eda-menu-item eda-submenu-item", className, {
         // "is-active": context.index === index,
@@ -33,8 +47,12 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         e.preventDefault();
         e.stopPropagation()
         setOpen(!menuOpen);
-        if( context.subIndex!==index){
-            context.onSubClick&&context.onSubClick(index)
+        to&&history.push(to)
+        if (context.onSelect && typeof index === "string") {
+            // context.onSelect(index);
+        }
+        if (context.subIndex !== index) {
+            context.onSubClick && context.onSubClick(index)
         }
     };
     let timer: any;
@@ -68,10 +86,9 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         "triangle-up": menuOpen,
     });
     const renderChildren = () => {
+        //context.index?.startsWith(index) &&
         const subMenuClasses = classNames("eda-submenu", "", {
-            // menuOpen && 
-            "menu-opened": subIndex?.startsWith(index)&&menuOpen
-            // ,
+            "menu-opened":  menuOpen
         });
 
         const childrenComponent = React.Children.map(children, (child, i) => {
@@ -79,11 +96,11 @@ export const SubMenu: React.FC<SubMenuProps> = ({
                 MenuItemProps
             >;
             const { displayName } = childElement.type;
-
-
             if (displayName === "MenuItem" || displayName === "SubMenu") {
                 return React.cloneElement(childElement, {
                     index: `${index}-${i}`,
+                    activeClass,
+                     hoverClass 
                 });
             } else {
                 console.error("Warning: Menu has a child which is not a MenuItem");
@@ -91,9 +108,11 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         });
         return <ul className={subMenuClasses}>{childrenComponent}</ul>;
     };
+
     const openTitle = classNames("eda-submenu-title", "", {
         "menu-opened-title": menuOpen,
         "sub-menu-active": context.index.startsWith(index),
+        
     });
     return (
         <li key={index} className={classes} {...hoverEvents}>

@@ -13,13 +13,13 @@
   list-style: none;
   min-width: 80px;
   color: #606266;
-
   > .eda-menu-item {
     box-sizing: border-box;
     text-align: left;
     cursor: pointer;
     line-height: 38px;
-    transition: @menu-transition;
+    transition: all .3s linear;
+    // transition: @menu-transition;
     &.is-disabled {
       pointer-events: none;
       cursor: default;
@@ -68,12 +68,10 @@
     display: none;
     list-style: none;
     white-space: nowrap;
-    
-    transition: @menu-transition;
+    transition: all .3s linear;
     .eda-menu-item {
       position: relative;
       display: block;
-      color: inherit;
       font-size: 14px;
       text-align: left;
       text-decoration: none;
@@ -83,14 +81,13 @@
       cursor: pointer;
       line-height: 38px;
       transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-      color: #606266;
-      &.is-active{
-        color: #2e303f!important;
-        background-color: #cdced2!important;
-        transition: background-color .3s cubic-bezier(.645,.045,.355,1),color .3s cubic-bezier(.645,.045,.355,1)
-      }
       &.eda-menu-item-hover{
         background-color: #ededee;
+      }
+      &.is-active{
+        color: #2e303f;
+        background-color: #cdced2;
+        transition: background-color .3s cubic-bezier(.645,.045,.355,1),color .3s cubic-bezier(.645,.045,.355,1)
       }
     }
     .eda-menu-item a {
@@ -104,6 +101,7 @@
   }
   .eda-submenu.menu-opened {
     display: block;
+
   }
 }
 

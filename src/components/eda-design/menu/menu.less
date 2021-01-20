@@ -67,12 +67,16 @@
     }
   }
   .eda-submenu {
-    display: none;
+    // display: none;
     list-style: none;
     //position: absolute;
     padding-left: 0;
     white-space: nowrap;
     transition: @menu-transition;
+    max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+    background: #d5d5d5;
     .menu-item {
       position: relative;
       display: block;
@@ -105,6 +109,8 @@
   }
   .eda-submenu.menu-opened {
     display: block;
+    max-height: 500px;
+    transition: max-height .25s ease-in;
   }
 }
 .menu-horizontal {

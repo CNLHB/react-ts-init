@@ -12,6 +12,14 @@
         align-items: center;
         white-space: nowrap;
         padding-right: 12px;
+
+    }
+    &.eda-label-top-inner{
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+        padding-right: 12px;
+
     }
     .eda-label-required{
         position: relative;
@@ -22,9 +30,21 @@
             content: "*";
             color: #f56c6c;
             margin-right: 4px;
+            padding-top: 2px
         }
     }
+    .eda-label-left{
+        text-align: left;
+    }
+    .eda-label-right{
+        text-align: right;
+    }
+    .eda-label-center{
+        text-align: center;
+    }
     .eda-label-top{
-        padding-bottom: 10px;
+        // padding-bottom: 10px;
+        display: inline-block;
+        margin-bottom: 10px;
     }
 }

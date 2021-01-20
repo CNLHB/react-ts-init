@@ -10,9 +10,10 @@ interface IRadioProps {
     buttonStyle?: buttonStyle,
     value?: string,
     defaultValue?: any,
-    onChange?: (value: string) => void,
     children?: React.ReactNode
-
+    type?: string;
+    name: string;
+    onChange?: (value: any) => void,
 }
 interface ParentRadio extends React.FC<IRadioProps> {
     Group?: React.FC<any>;
@@ -20,26 +21,52 @@ interface ParentRadio extends React.FC<IRadioProps> {
 }
 interface IRadioContext {
     value: string;
+    type?: string;
+    name: string;
+    selList?: string[];
     onSelect?: selectCallBack;
 }
-export const RadioContext = createContext<IRadioContext>({ value: "" });
+export const RadioContext = createContext<IRadioContext>({ value: "", name: "" });
 export const Radio: ParentRadio = (props) => {
-    const { className, defaultValue, value, buttonStyle, children, onChange } = props
+    const { className, name, type = "button", defaultValue, value, buttonStyle, children, onChange } = props
     const [val, setVal] = useState(defaultValue ? defaultValue : "")
+    const [selList, setSelList] = useState<string[]>(Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : [])
     const classes = classNames("eda-radio-group", className, {
         [" eda-radio-group-" + buttonStyle]: buttonStyle
     })
     useEffect(() => {
+        if(String(value).trim()===""){
+            setSelList([])
+            setVal("")
+            return 
+        }
         setVal(value ? value : defaultValue)
     }, [value, defaultValue])
     const handleClick = (value: string) => {
-        setVal(value)
-        if (onChange) {
-            onChange(value)
+        if (type === "checkbox") {
+            const index = selList.indexOf(value)
+            if (index === -1) {
+                let newList = [...selList, value]
+                setSelList(newList)
+                onChange && onChange(newList)
+            } else {
+                let newList = [...selList]
+                newList.splice(index, 1)
+                setSelList(newList)
+                onChange && onChange(newList)
+            }
+
+        } else {
+            setVal(value)
+            onChange && onChange(value)
         }
+
     };
     const passedContext: IRadioContext = {
         value: val,
+        selList,
+        type,
+        name,
         onSelect: handleClick,
     };
 
@@ -50,6 +77,7 @@ export const Radio: ParentRadio = (props) => {
     </div>
 }
 Radio.Item = RadioItem
+Radio.displayName = "Radio"
 Radio.defaultProps = {
     buttonStyle: "outline"
 }

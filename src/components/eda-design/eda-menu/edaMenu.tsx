@@ -11,6 +11,7 @@ interface ParentMenu extends React.FC<MenuProps> {
     MenuItem: React.FC<MenuItemProps>;
     SubItem: React.FC<SubMenuProps>;
 }
+export type OpenMode = "all" | "one"
 export interface MenuProps {
     defaultIndex?: string;
     className?: string;
@@ -20,6 +21,7 @@ export interface MenuProps {
     activeClass?: string,
     hoverClass?: string;
     defaultOpenSubMenus?: string[];
+    openMode?:OpenMode
 }
 interface IMenuContext {
     index: string;
@@ -40,8 +42,9 @@ export const EdaMenu: ParentMenu = (props) => {
         children,
         defaultIndex,
         onSelect,
-        activeClass,
-        hoverClass,
+        activeClass='',
+        hoverClass="",
+        openMode="one",
         defaultOpenSubMenus,
     } = props;
     const [currentActive, setActive] = useState(defaultIndex);
@@ -58,8 +61,6 @@ export const EdaMenu: ParentMenu = (props) => {
     };
     const subClick = (index: string) => {
         setSubActive(index)
-        console.log(index);
-
         if (onSelect) {
             //   onSelect(index);
         }
@@ -79,8 +80,13 @@ export const EdaMenu: ParentMenu = (props) => {
             >;
             const { displayName } = childElement.type;
             if (displayName === "MenuItem" || displayName === "SubMenu") {
+                console.log();
+                
                 return React.cloneElement(childElement, {
                     index: index.toString(),
+                    activeClass,
+                    hoverClass,
+                    [displayName === "SubMenu"?"openMode":""]:openMode
                 });
             } else {
                 console.error("Warning: Menu has a child whick is not a MenuItem");

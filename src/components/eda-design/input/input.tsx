@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useEffect } from 'react'
+import React, { InputHTMLAttributes, ReactNode, useEffect } from 'react'
 import { classNames } from '../utils'
 import './input.less'
 import { useState } from 'react';
@@ -9,9 +9,14 @@ export interface BaseInputProps {
     disabled?: true,
     className?: string;
     inputTextNullTip?: string,
-    showTip?: boolean,
-    onFocus?:((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
-    onBlur?:((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
+    showTip?: {
+        text: boolean,
+        border: boolean
+    } | boolean,
+    addonBefore?: ReactNode,
+    addonAfter?: ReactNode,
+    onFocus?: ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
+    onBlur?: ((event: React.FocusEvent<HTMLInputElement>) => void) | undefined;
     onChangeInput?: changeCallBack
 }
 
@@ -27,15 +32,20 @@ export const Input: React.FC<InputProps> = (props) => {
         showTip,
         onFocus,
         onBlur,
+        addonBefore,
+        addonAfter,
         inputTextNullTip = "输入框不能为空",
         onChangeInput,
         ...restProps
     } = props;
     let [val, setVal] = useState(value)
     let [textNull, setTextNull] = useState(false)
+    let showBorder = showTip&&showTip!==true&&showTip.border===true
     const classes = classNames("eda-input-inner", className, {
         'eda-input-disabled': disabled,
-        'eda-input-null': showTip&&textNull
+        'eda-input-group-addon-before': addonAfter,
+        'eda-input-group-addon-after': addonBefore,
+        'eda-input-null': ((showTip===true)&&textNull)||(showBorder&&textNull)
     });
     useEffect(() => {
         setVal(value)
@@ -47,29 +57,36 @@ export const Input: React.FC<InputProps> = (props) => {
             onChangeInput(value)
         }
     }
-    const focusHandle = (event:React.FocusEvent<HTMLInputElement>) => {
+    const focusHandle = (event: React.FocusEvent<HTMLInputElement>) => {
         if (onFocus) {
-          onFocus(event)
+            onFocus(event)
         }
-      }
-      const blurHandle = (event: React.FocusEvent<HTMLInputElement>) => {
+    }
+    const blurHandle = (event: React.FocusEvent<HTMLInputElement>) => {
         if (val === "") {
             setTextNull(true)
         } else {
             setTextNull(false)
         }
         if (onBlur) {
-          onBlur(event)
+            onBlur(event)
         }
-        
-      }
+
+    }
     return <div className="eda-input">
-        <input value={val} onChange={changHandle}
-            className={classes} type={type ? type : "text"}
-            onBlur={blurHandle}
-            onFocus={focusHandle}
-            {...restProps} />
+
+        <div className="eda-input-group">
+            {addonBefore ? <span className="eda-input-group-addon eda-input-group-addon-before">{addonBefore}</span> : null}
+            <input value={val}  onChange={changHandle}
+                className={classes} type={type ? type : "text"}
+                onBlur={blurHandle}
+                onFocus={focusHandle}
+                {...restProps} />
+            {addonAfter ? <span className="eda-input-group-addon eda-input-group-addon-after">{addonAfter}</span> : null}
+
+        </div>
         {(showTip && textNull) ? <div className="inputTextNullTip">{inputTextNullTip}</div> : null}
     </div>
 }
+Input.displayName = "Input";
 export default Input

@@ -30,7 +30,7 @@ export const Cascader = (props: ICascaderProps) => {
     const [content, setContent] = useState<Array<string>>([]);
     const [selList, setSelList] = useState<Array<Array<IOption>>>([]);
     const [num, setNum] = useState(defaultValue.length > 0 ? defaultValue.length : 1);
-    const [optionList, setOptionList] = useState(options)
+    // const [optionList, setOptionList] = useState(options)
     let [reverse, setReverse] = useState("");
     let [defaultVal, setDefaultVal] = useState(defaultValue);
     const classes = classNames("eda-cascader", className, {
@@ -71,7 +71,7 @@ export const Cascader = (props: ICascaderProps) => {
     }
 
     useEffect(() => {
-        setOptionList(options)
+        // setOptionList(options)
         setInputVal()
     }, [options]);
     useEffect(() => {
@@ -148,7 +148,7 @@ export const Cascader = (props: ICascaderProps) => {
                 <Icon type={`icon-jiantou`} iconType="jiantou"></Icon>
             </span>
             <div className={`eda-cascader-dropdown ${reverse}`} >
-                <div className="eda-dropdown__list" style={{ width: num * 180 }}
+                <div  className="eda-dropdown__list" style={{ width: num * 180 }}
                  >
                     {
                         options.length > 0 ?

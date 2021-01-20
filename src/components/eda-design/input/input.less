@@ -11,7 +11,33 @@
         color: #c0c4cc;
         cursor: not-allowed;
     }
+    .eda-input-group{
+        display: flex;
 
+    }
+    .eda-input-group-addon{
+        display: flex;
+        align-items: center;
+        // background-color: #f5f7fa;
+        color: #909399;
+        vertical-align: middle;
+        position: relative;
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        padding: 0 20px;
+        white-space: nowrap;
+        &.eda-input-group-addon-before{
+            border-right: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &.eda-input-group-addon-after{
+            border-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+    }
     .eda-input-inner{
         background-color: #fff;
         background-image: none;
@@ -35,7 +61,17 @@
             border-color: #409eff;
             outline: 0;
         }
+        &.eda-input-group-addon-before{
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &.eda-input-group-addon-after{
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
     }
+
+
     .eda-input-null{
         border-color: #f56c6c;
         &:focus{

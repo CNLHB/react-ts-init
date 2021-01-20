@@ -25,12 +25,14 @@ export const Pagination = (props: IPagination) => {
     let [moreLeft, setMoreLeft] = useState("more")
     let [moreRight, setMoreRight] = useState("more")
     //, setPageNum
-    let [pageNum] = useState(Math.ceil(total / currentSize))
+    let [pageNum, setPageNum] = useState(Math.ceil(total / currentSize))
     let [startPage, setStartPage] = useState(1)
     let [inputNum, setInputNum] = useState<string | number>(1)
-
     useEffect(() => {
-        pageClick(current)
+        setPageNum(Math.ceil(total / currentSize))
+    }, [total]);
+    useEffect(() => {
+        pageClick(current) 
     }, [current])
     // let classesPrev = classNames("", "", {})
     const moreHandle = (type: MoreHandle, value: MoreHandle) => {

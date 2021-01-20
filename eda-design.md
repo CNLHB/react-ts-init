@@ -619,37 +619,73 @@ interface IChangeResult{
 
 ## Table表格
 
-| 参数       | 说明         | 类型        | 默认值 | 版本 |
-| :--------- | :----------- | :---------- | :----- | :--- |
-| columns    | 默认状态     | boolean     | false  | 1.0  |
-| dataSource | 是否禁用     | boolean     | false  | 1.0  |
-| pagination | 是否显示页码 | IPagination |        | 1.0  |
+| 参数         | 说明                                  | 类型                          | 默认值 | 版本 |
+| :----------- | :------------------------------------ | :---------------------------- | :----- | :--- |
+| columns      | 列配置                                | boolean                       | false  | 1.0  |
+| dataSource   | 数据源                                | boolean                       | false  | 1.0  |
+| pagination   | 是否显示页码                          | IPagination                   |        | 1.0  |
+| className    | 表格类名                              | string                        |        | 1.0  |
+| rowClassName | 行类名                                | string                        |        | 1.0  |
+| stripe       | 是否显示样式,下边框，行背景，移入背景 | boolean                       | true   | 1.0  |
+| scroll       | 是否溢出显示滚动条                    | { x?: boolean, y?: boolean }; | flase  | 1.0  |
 
 ```tsx
+列选项
 interface IColumns {
     title: string,
     dataIndex: string,
-    key: string,
-    width?: number,
-    render?: (item: string) => ReactNode
+    key: string, 
+    align?: string, 文字对齐
+    className?: string, 类名
+    ellipsis?: boolean,  溢出隐藏，需要配合宽度使用
+    width?: number,列宽度
+    render?: (item: string) => ReactNode  自定义渲染
 }
+
+let IColumns = [        {
+            title: '操作',
+            dataIndex: 'action',
+            key: 'action',
+            className:"xs",
+            ellipsis:true,
+            width: 250,
+            render:(items:any)=>{
+              return Array.isArray(items)?items.map((item:any)=>{
+                return <Button size="sm" key={item} btnType="action">{item}</Button>
+              }): <Button size="sm"  btnType="action">{items}</Button> 
+            }
+        },]
+
+const dataSource = [
+    {
+        key: '1',
+        account: '1',
+        action: ["兑换优惠卷","操作1","操作2"],
+        time: 'time',
+        integralChange: '-1',
+        integralValue: '1',
+    },]
 //dataSource 数据中的key须与IColumms中的key的值相对应
-<Table pagination={{
-        total: 400, defaultPageSize: 50, onChange: (page, pageSize) => {
-            let data = dataSource.filter((item, index) => {
-                if((index >= (page-1) * pageSize)&&(index < (page) * pageSize)){
-                    return true
-                }else{
-                    return false
+<Table 
+	stripe={false}	
+    scroll={
+        { x:true,y:false} 是否出现滚动条 可选， 默认false 
+    }
+    pagination={{
+                total: 400, defaultPageSize: 50, onChange: (page, pageSize) => {
+                    let data = dataSource.filter((item, index) => {
+                        if ((index >= (page - 1) * pageSize) && (index < (page) * pageSize)) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
+                    console.log(data);
+                    setDataList(data)
+
                 }
-            })
-            console.log(data);
-
-            setDataList(data)
-
-        }
-    }} stripe columns={columns} dataSource={dataList}>
-</Table>
+}}  columns={columns} dataSource={dataList}>
+    </Table>
 ```
 
 ![image-20210111145440176](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210111145440176.png)
@@ -699,12 +735,14 @@ interface IColumns {
 
 ## Radio单选框
 
-| 参数         | 说明                                       | 类型                    | 默认值  | 版本 |
-| :----------- | :----------------------------------------- | :---------------------- | :------ | :--- |
-| buttonStyle  | 按钮类型  outline\|solid                   | buttonStyle             | outline | 1.0  |
-| defaultValue | 默认传入的value值                          | any                     |         | 1.0  |
-| value        | value值,外部可通过此值进行动态改变选中状态 | any                     |         | 1.0  |
-| onChange     | value改变事件，Item的value                 | (value: string) => void |         | 1.0  |
+| 参数         | 说明                                       | 类型                     | 默认值  | 版本 |
+| :----------- | :----------------------------------------- | :----------------------- | :------ | :--- |
+| name         | 表示同一个分组，必填                       | string                   |         | 1.0  |
+| type         | radio类型，checkbox表示多选，其他表示单选  | checkbox\|circle\|button | button  | 1.0  |
+| buttonStyle  | 按钮类型  outline\|solid                   | buttonStyle              | outline | 1.0  |
+| defaultValue | 默认传入的value值                          | any                      |         | 1.0  |
+| value        | value值,外部可通过此值进行动态改变选中状态 | any                      |         | 1.0  |
+| onChange     | value改变事件，Item的value                 | (value: string) => void  |         | 1.0  |
 
 
 
@@ -725,4 +763,26 @@ interface IColumns {
 + solid
 
 ![image-20210114200205992](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210114200205992.png)
+
+![image-20210119113006167](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210119113006167.png)
+
+## Form表单
+
+
+
+| 参数         | 说明         | 类型   | 默认值 | 版本 |
+| :----------- | :----------- | :----- | :----- | :--- |
+| defaultIndex | 默认选中     | string | 0      | 1.0  |
+| className    | 样式         | any    |        | 1.0  |
+| mode         | 类型         | any    |        | 1.0  |
+| activeClass  | 选中类名     | string |        | 1.0  |
+| hoverClass   | 鼠标移入类名 | string |        |      |
+
+
+
+```tsx
+
+```
+
+
 

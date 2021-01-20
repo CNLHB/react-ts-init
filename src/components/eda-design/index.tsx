@@ -1,5 +1,7 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export { Form } from './form/form';
+export {Tooltip} from './tooltip/tooltip';
 export { EdaMenu } from './eda-menu/edaMenu';
 export { Radio } from './radio/radio';
 export { Cascader } from './cascader/cascader';
@@ -30,4 +32,5 @@ export {Label} from './label/label';
 export {Pagination} from './pagination/pagination'    
 export {Table} from './table/table' 
 export  {Icon} from './icon/Icon'
+
 

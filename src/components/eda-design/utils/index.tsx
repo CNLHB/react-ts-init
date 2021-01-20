@@ -9,5 +9,5 @@ export function classNames(basicClass:string="", custonClass:string="",options:S
         }
         return ''
     })   
-    return className
+    return className.trim()
 }
