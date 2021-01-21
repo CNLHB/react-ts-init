@@ -80,6 +80,22 @@ export const postParam = (url: string, params: object): any => {
     });
 };
 
+export const postMultiple = (url: string, params: object): any => {
+    return axios({
+        method: "post",
+        url: url,
+        data: params,
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }).then(res => {
+        return res
+    }).catch(err => {
+        return err
+    });
+};
+
+
 export const get = (url: string): any => {
     const result = axios({
         method: "get",
@@ -128,6 +144,8 @@ export const putParm = (url: string, params: object): any => {
         return err
     });
 };
+
+
 
 export const multiple = function (requestArray: any, callback: any) {
     axios.all(requestArray).then(axios.spread(callback));

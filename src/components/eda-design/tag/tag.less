@@ -13,6 +13,34 @@
     &.eda-tag-none{
         display: none;
     }
+    &.eda-tag-edit{
+        cursor: pointer;
+        background: #fff;
+        color:#606266;
+        border: 1px solid #dcdfe6;
+        &:hover{
+            color: #409eff;
+            border: 1px solid #d9ecff;
+            background-color: #ecf5ff;
+        }
+        input{
+            line-height: 29px;
+            max-width: 100%;
+            width: 50px;
+            padding: 0 10px;
+            outline: 0;
+            border: 1px solid #409eff;
+            border-radius: 4px;
+        }
+    }
+    &.eda-tag-edit-show{
+        padding: 0;
+        border: 0;
+        &:hover{
+            border: 0;
+        }
+    }
+
     .eda-tag-close{
         border-radius: 50%;
         text-align: center;

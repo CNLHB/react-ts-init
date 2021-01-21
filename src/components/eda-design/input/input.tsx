@@ -9,6 +9,7 @@ export interface BaseInputProps {
     disabled?: true,
     className?: string;
     inputTextNullTip?: string,
+    inputNull?: boolean;
     showTip?: {
         text: boolean,
         border: boolean
@@ -36,20 +37,26 @@ export const Input: React.FC<InputProps> = (props) => {
         addonAfter,
         inputTextNullTip = "输入框不能为空",
         onChangeInput,
+        inputNull = false,
         ...restProps
     } = props;
     let [val, setVal] = useState(value)
     let [textNull, setTextNull] = useState(false)
-    let showBorder = showTip&&showTip!==true&&showTip.border===true
+    let showBorder = showTip && showTip !== true && showTip.border === true
+    
     const classes = classNames("eda-input-inner", className, {
         'eda-input-disabled': disabled,
         'eda-input-group-addon-before': addonAfter,
         'eda-input-group-addon-after': addonBefore,
-        'eda-input-null': ((showTip===true)&&textNull)||(showBorder&&textNull)
+        'eda-input-null': ((showTip === true) && textNull) || (showBorder && textNull)
     });
+    
     useEffect(() => {
         setVal(value)
     }, [value])
+    useEffect(() => {
+        setTextNull(inputNull)
+    }, [inputNull])
     const changHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value: string = event.target.value
         setVal(value)
@@ -77,7 +84,7 @@ export const Input: React.FC<InputProps> = (props) => {
 
         <div className="eda-input-group">
             {addonBefore ? <span className="eda-input-group-addon eda-input-group-addon-before">{addonBefore}</span> : null}
-            <input value={val}  onChange={changHandle}
+            <input value={val} onChange={changHandle}
                 className={classes} type={type ? type : "text"}
                 onBlur={blurHandle}
                 onFocus={focusHandle}

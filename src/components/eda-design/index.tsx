@@ -1,5 +1,6 @@
 import './styles/variables.less';
 import './styles/mixin.less';
+export {Upload} from './upload/upload';
 export { Form } from './form/form';
 export {Tooltip} from './tooltip/tooltip';
 export { EdaMenu } from './eda-menu/edaMenu';

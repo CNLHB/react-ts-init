@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import sv from '../../logo.svg'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './index.less'
+import { Editor } from '@tinymce/tinymce-react';
+import MarkdownIt from 'markdown-it'
+import MdEditor from 'react-markdown-editor-lite'
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
 import {
   Menu, Spin, Message, Modal,
   Badge, Textarea, Switch, Alert,
@@ -16,6 +21,7 @@ import {
   SubMenu,
   Radio,
   Form,
+  Upload,
   Cascader,
   EdaMenu
   , Select, Button, Icon
@@ -290,7 +296,11 @@ interface IMenu {
   icon?: string,
   children?: IMenu[]
 }
+const mdParser = new MarkdownIt(/* Markdown-it options */);
 
+function handleEditorChange(obj:any) {    
+  console.log('handleEditorChange', obj)
+}
 export default function Test() {
   let [vis, setVis] = useState(false)
   let [spin, setSpin] = useState(false)
@@ -299,7 +309,13 @@ export default function Test() {
   const [opt, setOpt] = useState([{ value: "1", content: 2 }])
   const [opts, setOpts] = useState<Array<any>>([])
   const [initFormValue, setFormValue] = useState<any>({
-    work:"work"
+    work: "work",
+    work1: 1,
+    work2: "11",
+    work3: "",
+    work4: "",
+    work5: "",
+
   })
   const columns = [
     {
@@ -354,155 +370,198 @@ export default function Test() {
   }]
   const renderMenus = (list: IMenu[]) => {
     return list.map((item: any) => {
-        if (item.children) {
-          return <EdaMenu.SubItem key={item.title} title={item.title}>
-            {renderMenus(item.children)}
-          </EdaMenu.SubItem>
-        } else {
-          return <EdaMenu.MenuItem to={item.path}  key={item.title}>
-            {item.title}
-          </EdaMenu.MenuItem>
-        }
-      })
-    
+      if (item.children) {
+        return <EdaMenu.SubItem key={item.title} title={item.title}>
+          {renderMenus(item.children)}
+        </EdaMenu.SubItem>
+      } else {
+        return <EdaMenu.MenuItem to={item.path} key={item.title}>
+          {item.title}
+        </EdaMenu.MenuItem>
+      }
+    })
+
   }
+  const handleEditorChange = (content: any, editor: any) => {
+    console.log('Content was updated:', content);
+    console.log('Content was updated:', editor);
+  }
+
   return <div>
-    <Button onClick={()=>{
-      setFormValue({
-        work:"xxxxx",
-        "work1":111,
-        work5:"project"
-      })
-    }}>add</Button>
+        {/* <MdEditor
+      style={{ height: "500px" }}
+      renderHTML={(text) => mdParser.render(text)}
+      onChange={handleEditorChange}
+    />
+    <Editor
+      initialValue="<p>This is the initial content of the editor</p>"
+      init={{
+        height: 500,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+             alignleft aligncenter alignright alignjustify | \
+             bullist numlist outdent indent | removeformat | help'
+      }}
+      onEditorChange={handleEditorChange}
+    /> */}
+    <Upload 
+      multiple
+      onChange={(file:any)=>[
+      console.log(file)
+      
+    ]}>
+            <Button 
+            type="submit"
+      btnType="action"
+      icon={<Icon type="" style={{fontSize:12}} 
+      iconType="sanjiaodown"></Icon>}
+      >add</Button>
+    </Upload>
+    <Button 
+      btnType="action"
+      icon={<Icon type="" style={{fontSize:12}} 
+      iconType="sanjiaodown"></Icon>}
+      >add</Button>
     <div style={{ margin: "50px 50px" }}>
-      <Radio 
+      <Radio
         type="checkbox"
         name="group1"
         defaultValue="child" onChange={(val: any) => {
-        console.log(val);
-      }}>
+          console.log(val);
+        }}>
         <Radio.Item disabled value={"child"}> child </Radio.Item>
         <Radio.Item value={"child1"}> child1 </Radio.Item>
         <Radio.Item value={"child2"}> child2 </Radio.Item>
       </Radio>
 
-      <Radio 
+      <Radio
         type="circle"
         name="group2"
         defaultValue="child" onChange={(val: any) => {
-        console.log(val);
-      }}>
+          console.log(val);
+        }}>
         <Radio.Item value={"child"}> child </Radio.Item>
         <Radio.Item value={"child1"}> child1 </Radio.Item>
         <Radio.Item value={"child2"}> child2 </Radio.Item>
       </Radio>
 
-      <Radio 
+      <Radio
         type="button"
         name="group3"
         defaultValue="child" onChange={(val: string) => {
-        console.log(val);
-      }}>
+          console.log(val);
+        }}>
         <Radio.Item value={"child"}> child </Radio.Item>
         <Radio.Item value={"child1"}> child1 </Radio.Item>
         <Radio.Item value={"child2"}> child2 </Radio.Item>
       </Radio>
 
 
-      <Form  
-      onFinish={(data:any)=>{
-        console.log(data);
-        
-      }}
-      onValuesChange={(obj, obj2)=>{
-        console.log(obj);
-        console.log(obj2);
-        
-      }}
-        formData={initFormValue} formLabelAlign="horizontal" formLayout={{labelCol:4,wrapperCol:6}}>
-            <div style={{display:"flex", marginBottom:20,justifyContent:"space-between"}} >
-              <Form.Item className="w50"  name="work"  label="label" required colon> 
-                <Input
-                  addonBefore="https://"
-                  ></Input>
-            </Form.Item>
-            <Form.Item  className="w50" name="work2"  label="label" required colon>
-                <Input
-                  ></Input>
-            </Form.Item>
-            </div>
+      <Form
+        onFinish={(data: any) => {
+          console.log(data);
 
-            <Form.Item name="work3" className="form-item-test" label="labe3" required>
-              <Tooltip title="ssssssssss">
-              <Input
-                addonBefore="https://"
-                ></Input>
-              </Tooltip>
+        }}
+        onValuesChange={(obj, obj2) => {
+          console.log(obj);
+          console.log(obj2);
+
+        }}
+        onFinishFailed={(obj, obj2) => {
+          console.log(obj);
+          console.log(obj2);
+        }}
+        formData={initFormValue} formLabelAlign="horizontal"
+        formLayout={{ labelCol: 4, wrapperCol: 6 }}>
+        <div style={{ display: "flex", marginBottom: 20, justifyContent: "space-between" }} >
+          <Form.Item className="w50" rules={{ required: { border: false, text: true }, message: "不用填" }} name="work" label="label" required colon>
+            <Input
+              addonBefore="https://"
+            ></Input>
           </Form.Item>
-          <Form.Item  name="work4" className="form-item-test" label="评论设置">
-              <Radio  type="checkbox" name="comment">
-                <Radio.Item  value="comment">
-                    <span style={{paddingLeft:10}}>容许评论</span>
-                </Radio.Item>
-                <Radio.Item  value="comment1">
-                    <span style={{paddingLeft:10}}>容许评论1</span>
-                </Radio.Item>
-                <Radio.Item  value="comment2">
-                    <span style={{paddingLeft:10}}>容许评论2</span>
-                </Radio.Item>
-              </Radio>
-            </Form.Item>
-            <Form.Item name="work5"  className="form-item-test" label="工程评论">
-              <Radio name="work5" type="circle" >
-                <Radio.Item  value="project">
-                    <span style={{paddingLeft:10}}>工程评论1</span>
-                </Radio.Item>
-                <Radio.Item  value="project1">
-                    <span style={{paddingLeft:10}}>工程评论2</span>
-                </Radio.Item>
-                <Radio.Item  value="project2">
-                    <span style={{paddingLeft:10}}>工程评论3</span>
-                </Radio.Item>
-              </Radio>
-            </Form.Item>
-            <Form.Item   className="form-item-test" label="工程评论">
-              <span><Button type="submit">提交</Button></span>
-            </Form.Item>
+          <Form.Item rules={{ required: { border: false, text: true }, message: "不用填" }} className="w50" name="work2" label="label" required colon>
+            <Input
+            ></Input>
+          </Form.Item>
+        </div>
+
+        <Form.Item rules={{ required: { border: false, text: true }, message: "不用填" }} name="work3" className="form-item-test" label="labe3" required>
+          <Tooltip title="ssssssssss">
+            <Input
+              addonBefore="https://"
+            ></Input>
+          </Tooltip>
+        </Form.Item>
+        <Form.Item name="work4" className="form-item-test" label="评论设置">
+          <Radio type="checkbox" name="comment">
+            <Radio.Item value="comment">
+              <span style={{ paddingLeft: 10 }}>容许评论</span>
+            </Radio.Item>
+            <Radio.Item value="comment1">
+              <span style={{ paddingLeft: 10 }}>容许评论1</span>
+            </Radio.Item>
+            <Radio.Item value="comment2">
+              <span style={{ paddingLeft: 10 }}>容许评论2</span>
+            </Radio.Item>
+          </Radio>
+        </Form.Item>
+        <Form.Item name="work5" className="form-item-test" label="工程评论">
+          <Radio name="work5" type="circle" >
+            <Radio.Item value="project">
+              <span style={{ paddingLeft: 10 }}>工程评论1</span>
+            </Radio.Item>
+            <Radio.Item value="project1">
+              <span style={{ paddingLeft: 10 }}>工程评论2</span>
+            </Radio.Item>
+            <Radio.Item value="project2">
+              <span style={{ paddingLeft: 10 }}>工程评论3</span>
+            </Radio.Item>
+          </Radio>
+        </Form.Item>
+        <Form.Item className="form-item-test" label="工程评论">
+          <span><Button type="submit">提交</Button></span>
+        </Form.Item>
       </Form>
 
     </div>
-      <div>
+    <div>
       <EdaMenu
-      openMode="all"
-      style={{ width: 232, height: 700, "backgroundColor": " #f5f5f5" }}
-      defaultIndex={"0"}
-      mode="vertical"
-      onSelect={(index: string) => {
-        console.log(index);
-      }}
+        openMode="all"
+        style={{ width: 232, height: 700, "backgroundColor": " #f5f5f5" }}
+        defaultIndex={"0"}
+        mode="vertical"
+        onSelect={(index: string) => {
+          console.log(index);
+        }}
       // activeClass="menu-active-item"
       // hoverClass="menu-hover-item"
-    >
-      {renderMenus(menuList)}
+      >
+        {renderMenus(menuList)}
         <EdaMenu.MenuItem >
         </EdaMenu.MenuItem>
-    </EdaMenu>
-    <EdaMenu
-      openMode="all"
-      style={{ width: 232, height: 700, "backgroundColor": " #f5f5f5" }}
-      defaultIndex={"0"}
-      mode="vertical"
-      onSelect={(index: string) => {
-        console.log(index);
-      }}
+      </EdaMenu>
+      <EdaMenu
+        openMode="all"
+        style={{ width: 232, height: 700, "backgroundColor": " #f5f5f5" }}
+        defaultIndex={"0"}
+        mode="vertical"
+        onSelect={(index: string) => {
+          console.log(index);
+        }}
       // activeClass="menu-active-item"
       // hoverClass="menu-hover-item"
-    >
-      {renderMenus(menuList)}
+      >
+        {renderMenus(menuList)}
         <EdaMenu.MenuItem >
         </EdaMenu.MenuItem>
-    </EdaMenu>
-      </div>
+      </EdaMenu>
+    </div>
     <Button onClick={() => [
       setOpts(option)
     ]}>opt</Button>
@@ -511,7 +570,7 @@ export default function Test() {
         defaultValue={["zhinan", "shejiyuanze", "yizhi"]}
         placeholder="提示信息"
         onChange={(val: any) => {
-            console.log(val);
+          console.log(val);
         }}
       ></Cascader></div>
     <div style={{ width: 500 }}>
@@ -548,23 +607,23 @@ export default function Test() {
       <Breadcrumb.Item>General</Breadcrumb.Item>
     </Breadcrumb>
     <div style={{ width: 500 }}>
-    <Label name={"bitian"} required>
+      <Label name={"bitian"} required>
         <Input
           addonBefore="https://"
-          ></Input>
+        ></Input>
       </Label>
       <Label name={"bitian"} required>
         <Tooltip title="不能为空">
-        <Input
-          addonBefore="https://"
+          <Input
+            addonBefore="https://"
           ></Input>
         </Tooltip>
       </Label>
       <Tooltip title="不不能为空不能为空不能为空不能为空不能为空不能为空不能为空能为空">
         <Input
           addonBefore="https://"
-          ></Input>
-        </Tooltip>
+        ></Input>
+      </Tooltip>
       <div style={{ margin: 50 }}></div>
       <Label width={75} name="玄天:"
         position="left" >
@@ -619,12 +678,20 @@ export default function Test() {
     </DropDownMenu>}>
       下拉列表
           </DropDown>
-    <div style={{ marginTop: 50 }}></div>
-    <Tag closable>tag1</Tag>
-    <Tag type="danger">tag1</Tag>
-    <Tag type="info" closable>tag1</Tag>
-    <Tag type="success">tag1</Tag>
-    <Tag type="warning">tag1</Tag>
+    <div style={{ marginTop: 50, marginLeft: 200 }}>
+
+      <Tag edit blur={(val) => {
+        console.log(val);
+      }} >+技能</Tag>
+
+
+      <Tag type="danger">tag1</Tag>
+      <Tag type="info" closable>tag1</Tag>
+      <Tag type="success">tag1</Tag>
+      <Tag type="warning">tag1</Tag>
+
+    </div>
+
     <div style={{ marginTop: 50 }}></div>
     <Alert title="警告"
       type="error"
@@ -718,11 +785,11 @@ export default function Test() {
 
     <Textarea
       showTip
-      
+
       resize={false}
       value="默认值"
       placeholder="请输入"></Textarea>
-    <Input className="my" placeholder="name" onChangeInput={(val: string) => {
+    <Input showTip className="my" placeholder="name" onChangeInput={(val: string) => {
       console.log(val);
     }}></Input>
 

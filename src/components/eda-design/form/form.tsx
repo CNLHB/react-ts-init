@@ -11,7 +11,10 @@ interface IFormContext {
         wrapperCol?: number
     };
     formData?: any,
+    validate?: any,
     onChange?:(key:string, value:string)=>void
+    validateList?:Array<string>
+    pushValList?:(key:string)=>void
     
 
 }
@@ -38,13 +41,24 @@ interface IForm {
     formLabelAlign?: string
     onValuesChange?: (changedValues: any, allValues: any) => void
     formData?: any
-    onFinish?:(data:any)=>void
+    onFinish?:(data:any)=>void;
+    onFinishFailed?:(keyVal: any, allValues?: any)=>void
     
 
 }
+const createObjForArr = (arr:string[]) => {
+    let obj:{[key:string]:boolean} = {}
+    arr.forEach((item:string)=>{
+        obj[item] = false
+    })
+    return  obj
+} 
 export const Form: ParentForm = (props) => {
-    const { className, onValuesChange,onFinish, formData, formLabelAlign, formLayout = {}, children } = props
+    const { className,onFinishFailed, onValuesChange,onFinish, formData, formLabelAlign, formLayout = {}, children } = props
     const [data, setData] = useState(formData)
+    const [list, setList] = useState<string[]>([])
+    const [validate, setValidate] = useState(createObjForArr(Object.keys(formData)))
+
     useEffect(() => {
         setData(formData)
     }, [formData]);
@@ -56,11 +70,34 @@ export const Form: ParentForm = (props) => {
             [key]: value
         }, newData)
     }
+    const pushList = (val:string)=>{
+        list.push(val)
+    }
     const formContext = {
         formLayout: formLayout,
         formData: data,
         formLabelAlign: formLabelAlign ? formLabelAlign : "horizontal",
-        onChange:inputChange
+        onChange:inputChange,
+        validate,
+        pushValList:pushList
+    }
+    const submit = ()=>{
+        let newValidate:{[key:string]:boolean} = {}
+        list.forEach((item:string)=>{
+                newValidate[item] = !data[item]
+        })
+        setValidate(newValidate)
+        let flag = Object.keys(newValidate).every((item:string)=>{
+            return !newValidate[item]
+        })
+        flag&&onFinish&&onFinish(data)
+        newValidate = {...newValidate}
+        list.forEach((item:string)=>{
+                newValidate[item] = !newValidate[item]
+        })
+
+        !flag&&onFinishFailed&&onFinishFailed(newValidate,data)
+
     }
     const changeHandle = (e: any) => {
         const name = e.target && e.target.name
@@ -85,7 +122,7 @@ export const Form: ParentForm = (props) => {
                     onSubmit={(e:React.FormEvent<HTMLFormElement>)=>{
                         e.stopPropagation()
                         e.preventDefault()
-                        onFinish&&onFinish(data)
+                        submit()
                     }}
                 >
                     {children}

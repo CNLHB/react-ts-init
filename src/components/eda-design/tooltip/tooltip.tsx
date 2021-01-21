@@ -7,7 +7,7 @@ interface IToolTip {
     className?: string,
     placement?: IPlacement
     title: string,
-    children?: React.ReactNode
+    children?: React.ReactNode,
 }
 export const Tooltip = (props: IToolTip) => {
     const { className, placement="top", title, children,...rest } = props
@@ -48,5 +48,6 @@ export const Tooltip = (props: IToolTip) => {
 
 }
 
+Tooltip.displayName = "Tooltip"
 
 export default Tooltip

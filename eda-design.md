@@ -770,13 +770,28 @@ const dataSource = [
 
 
 
-| 参数         | 说明         | 类型   | 默认值 | 版本 |
-| :----------- | :----------- | :----- | :----- | :--- |
-| defaultIndex | 默认选中     | string | 0      | 1.0  |
-| className    | 样式         | any    |        | 1.0  |
-| mode         | 类型         | any    |        | 1.0  |
-| activeClass  | 选中类名     | string |        | 1.0  |
-| hoverClass   | 鼠标移入类名 | string |        |      |
+| 参数           | 说明                       | 类型                                         | 默认值     | 版本 |
+| -------------- | :------------------------- | :------------------------------------------- | :--------- | :--- |
+| formData       | 表单数据                   | any                                          |            | 1.0  |
+| className      | 类名                       | string                                       |            | 1.0  |
+| formLabelAlign | label文字对齐              | horizontal\|vertical                         | horizontal | 1.0  |
+| formLayout     | 水平状态label和input的占比 | {labelCol: number,wrapperCol: number}        |            | 1.0  |
+| onValuesChange | 表单内容改变事件           | (changedValues: any, allValues: any) => void |            | 1.0  |
+| onFinish       | 表单验证成功回调           | (data:any)=>void                             |            | 1.0  |
+| onFinishFailed | 表单验证失败回调           | (keyVali:any,data:any)=>void                 |            |      |
+
+## Form.Item表单元素
+
+
+
+| 参数      | 说明                                                         | 类型                 | 默认值     | 版本 |
+| --------- | :----------------------------------------------------------- | :------------------- | :--------- | :--- |
+| name      | 字段名，数据同步将被 Form 接管,需要与表单的formData key对应  | string               |            | 1.0  |
+| colon     | 是否显示label的冒号                                          | boolean              | false      | 1.0  |
+| className | 类名                                                         | string               |            | 1.0  |
+| label     | label文字对齐                                                | horizontal\|vertical | horizontal | 1.0  |
+| required  | 是否必填                                                     |                      | false      | 1.0  |
+| rules     | 增强必填提示项 {required：{text：boolean,border:boolean},message:string} |                      |            | 1.0  |
 
 
 

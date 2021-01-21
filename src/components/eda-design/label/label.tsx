@@ -1,7 +1,7 @@
-import React, { LabelHTMLAttributes } from 'react'
+import React, { LabelHTMLAttributes, useRef } from 'react'
 import { classNames } from '../utils'
 import './label.less'
-import { BaseInputProps } from './../input/input';
+import { InputProps } from './../input/input';
 type PositionType = "top" | "left"
 export interface BaseLabelProps {
     width?: number,
@@ -11,7 +11,8 @@ export interface BaseLabelProps {
     required?: boolean
     className?: string;
     colon?: boolean,
-    algin?:string
+    algin?:string,
+    ref?:any
 }
 
 type NativeLabelProps = LabelHTMLAttributes<HTMLLabelElement> & BaseLabelProps;
@@ -27,6 +28,7 @@ export const Label: React.FC<LabelProps> = (props) => {
         position,
         colon,
         algin="left",
+        ...rest
     } = props;
     const classesContainer = classNames("eda-label", className, {
         ["eda-label-" + position + "-inner"]: position,
@@ -39,15 +41,17 @@ export const Label: React.FC<LabelProps> = (props) => {
     const renderChildren = () => {
         return React.Children.map(children, (child, index) => {
             const childElement = child as React.FunctionComponentElement<
-                BaseInputProps
+                any
             >;
             const { displayName } = childElement.type;
-            if(displayName==="Input"){
+            if(displayName==="Input"||displayName==="Tooltip"){
                 return React.cloneElement(childElement, {
-                    showTip: required,
+                    // showTip: required,
+                    ...rest
                 });
             }
             return React.cloneElement(childElement, {
+                ...rest,
             });
             if (displayName === "Input") {
                 return React.cloneElement(childElement, {

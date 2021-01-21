@@ -2,7 +2,7 @@ import React, { FC, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 import { classNames } from '../utils'
 import './button.less'
 export type ButtonSize = "lg" | "sm" | "ssm";
-export type ButtonType = "primary" | "default" |"success"| "danger" | "link" | "warning"|"action";
+export type ButtonType = "primary" | "default" | "success" | "danger" | "link" | "warning" | "action";
 
 interface BaseButtonProps {
   className?: string;
@@ -14,6 +14,7 @@ interface BaseButtonProps {
   btnType?: ButtonType;
   children: React.ReactNode;
   href?: string;
+  icon?:React.ReactNode
 }
 //交叉类型
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
@@ -36,6 +37,7 @@ export const Button: FC<ButtonProps> = (props) => {
     size,
     children,
     href,
+    icon,
     ...restProps
   } = props;
   // btn, btn-lg, btn-primary
@@ -53,7 +55,7 @@ export const Button: FC<ButtonProps> = (props) => {
   } else {
     return (
       <button className={classes} disabled={disabled} {...restProps}>
-        {children}
+        {children} {icon}
       </button>
     );
   }
