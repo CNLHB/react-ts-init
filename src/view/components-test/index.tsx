@@ -29,6 +29,7 @@ import {
 import { Option } from './../../components/eda-design/select/option';
 import Tag from './../../components/eda-design/tag/tag';
 import { Input } from './../../components/eda-design/input/input';
+import { postMultiple } from '@/config/axios';
 const dataSource = [
   {
     key: '1',
@@ -412,10 +413,10 @@ export default function Test() {
     /> */}
     <Upload 
       multiple
-      onChange={(file:any)=>[
-      console.log(file)
-      
-    ]}>
+      onChange={(file:any)=>{
+        postMultiple("x",file)
+        console.log(file)
+      }}>
             <Button 
             type="submit"
       btnType="action"
@@ -666,7 +667,7 @@ export default function Test() {
     </DropDownMenu>}>
       下拉列表
           </DropDown>
-    <DropDown position="left" overlay={<DropDownMenu>
+    <DropDown type="click" position="left" overlay={<DropDownMenu>
       1111111
               <p>111</p>
     </DropDownMenu>}>

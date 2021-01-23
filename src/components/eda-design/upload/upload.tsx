@@ -24,6 +24,7 @@ export const Upload = (props: IUpload) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const handleHooksFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0]
+        inputRef && inputRef.current&& (inputRef.current.value="")
         if (file && uploadType === "image") {
             if (file?.type.startsWith(uploadType)) {
                 if (file.size <= MAX_FILE_SIZE) {
@@ -47,6 +48,7 @@ export const Upload = (props: IUpload) => {
                 onChange && onChange(file)
             }
         }
+        
     }
     useEffect(() => {
         hooksModalFile && setHooksModalVisible(true)
@@ -80,18 +82,10 @@ export const Upload = (props: IUpload) => {
                     multiple={multiple}
                     accept={accept}
                     className="base-upload-input"
+                    // onInput={handleHooksFileChange}
                     onChange={handleHooksFileChange}
                 />
             </label>
-            {/* <div className="img-container">
-                {hooksResultImgUrl && (
-                    <img
-                        className="img"
-                        src={hooksResultImgUrl}
-                        alt="classResultImgUrl"
-                    />
-                )}
-            </div> */}
             {hooksModalVisible && (
                 <HooksCropperModal
 
