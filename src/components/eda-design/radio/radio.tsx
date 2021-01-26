@@ -14,7 +14,6 @@ interface IRadioProps {
     type?: string;
     name: string;
     onChange?: (value: any) => void,
-    inputNull?:boolean
 }
 interface ParentRadio extends React.FC<IRadioProps> {
     Group?: React.FC<any>;
@@ -29,7 +28,7 @@ interface IRadioContext {
 }
 export const RadioContext = createContext<IRadioContext>({ value: "", name: "" });
 export const Radio: ParentRadio = (props) => {
-    const { className,inputNull, name, type = "button", defaultValue, value, buttonStyle, children, onChange } = props
+    const { className, name, type = "button", defaultValue, value, buttonStyle, children, onChange } = props
     const [val, setVal] = useState(defaultValue ? defaultValue : "")
     const [selList, setSelList] = useState<string[]>(Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : [])
     const classes = classNames("eda-radio-group", className, {
@@ -42,6 +41,7 @@ export const Radio: ParentRadio = (props) => {
             return 
         }
         setVal(value ? value : defaultValue)
+        
     }, [value, defaultValue])
     const handleClick = (value: string) => {
         if (type === "checkbox") {

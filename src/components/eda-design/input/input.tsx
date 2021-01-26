@@ -50,6 +50,9 @@ export const Input: React.FC<InputProps> = (props) => {
         'eda-input-group-addon-after': addonBefore,
         'eda-input-null': ((showTip === true) && textNull) || (showBorder && textNull)
     });
+    const inputGroup = classNames("eda-input-group", "", {
+        'eda-input-disabled': disabled,
+    });
     
     useEffect(() => {
         setVal(value)
@@ -59,8 +62,8 @@ export const Input: React.FC<InputProps> = (props) => {
     }, [inputNull])
     const changHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value: string = event.target.value
-        setVal(value)
-        if (onChangeInput) {
+        !disabled&&setVal(value)
+        if (onChangeInput&&!disabled) {
             onChangeInput(value)
         }
     }
@@ -82,10 +85,11 @@ export const Input: React.FC<InputProps> = (props) => {
     }
     return <div className="eda-input">
 
-        <div className="eda-input-group">
+        <div className={inputGroup}>
             {addonBefore ? <span className="eda-input-group-addon eda-input-group-addon-before">{addonBefore}</span> : null}
             <input value={val} onChange={changHandle}
                 className={classes} type={type ? type : "text"}
+                disabled={disabled}
                 onBlur={blurHandle}
                 onFocus={focusHandle}
                 {...restProps} />

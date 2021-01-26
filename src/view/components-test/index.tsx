@@ -3,10 +3,13 @@ import sv from '../../logo.svg'
 import { Link } from 'react-router-dom'
 import './index.less'
 import { Editor } from '@tinymce/tinymce-react';
+// import Editor from "rich-markdown-editor";
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
+
+// window.tinymce.baseURL = window.location.origin + '/tinymce'
 import {
   Menu, Spin, Message, Modal,
   Badge, Textarea, Switch, Alert,
@@ -30,6 +33,16 @@ import { Option } from './../../components/eda-design/select/option';
 import Tag from './../../components/eda-design/tag/tag';
 import { Input } from './../../components/eda-design/input/input';
 import { postMultiple } from '@/config/axios';
+// 这个函数可以把File转为datauri字符串，作为演示
+function onImageUpload(file:any) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = (data:any) => {
+      resolve(data.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+}
 const dataSource = [
   {
     key: '1',
@@ -387,17 +400,36 @@ export default function Test() {
     console.log('Content was updated:', content);
     console.log('Content was updated:', editor);
   }
-
+  const tinymceCDN = window.location.origin + '/tinymce/tinymce.min.js'
   return <div>
-        {/* <MdEditor
+    {/* <Editor
+    onChange={(e)=>{
+      console.log(e);
+      
+    }}
+  defaultValue="Hello world!"
+/> */}
+          <Tooltip title="ssssssssss">
+            <Input
+              disabled
+              addonBefore="https://"
+            ></Input>
+            </Tooltip>
+        <MdEditor
       style={{ height: "500px" }}
-      renderHTML={(text) => mdParser.render(text)}
+      renderHTML={(text:any) => mdParser.render(text)}
       onChange={handleEditorChange}
+      onImageUpload={onImageUpload} 
     />
     <Editor
       initialValue="<p>This is the initial content of the editor</p>"
+      // apiKey="wl85fiw1zxbzaxa94qwm5a9vutlzcyi5d9x84cetp8o8jcd4"
+    
       init={{
-        height: 500,
+        height: 300,
+        base_url: window.location.origin + '/tinymce',
+        document_base_url:window.location.origin + '/tinymce',
+        language:'zh_CN',//注意大小写
         menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview anchor',
@@ -410,7 +442,7 @@ export default function Test() {
              bullist numlist outdent indent | removeformat | help'
       }}
       onEditorChange={handleEditorChange}
-    /> */}
+    />
     <Upload 
       multiple
       onChange={(file:any)=>{
@@ -495,6 +527,7 @@ export default function Test() {
         <Form.Item rules={{ required: { border: false, text: true }, message: "不用填" }} name="work3" className="form-item-test" label="labe3" required>
           <Tooltip title="ssssssssss">
             <Input
+              disabled
               addonBefore="https://"
             ></Input>
           </Tooltip>
