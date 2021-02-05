@@ -411,7 +411,9 @@ export default function Test() {
 /> */}
           <Tooltip title="ssssssssss">
             <Input
-              disabled
+              textType="number"
+              min={3}
+              max={10}
               addonBefore="https://"
             ></Input>
             </Tooltip>

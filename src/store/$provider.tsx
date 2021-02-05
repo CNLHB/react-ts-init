@@ -17,17 +17,20 @@ export abstract class AbstractStore {
     /**
      * 在当前组件监听数据变动， 当render的时候重新渲染
      */
-    useWatch() {
-        const [, setState] = useState(0)
-        useEffect(() => {
+    createEffectCb(setState:Dispatch<number>){
+        return ()=>{
             this.setStates.push(setState)
-            return () => {
-                this.setStates = this.setStates.filter(disp => disp !== setState)
+            return ()=>{
+                this.setStates = this.setStates.filter(disp=>disp!==setState)
             }
-        })
+        }
     }
-}
 
+}
+export function  useWatch(store:AbstractStore) {
+    const [, setState] = useState(0)
+    useEffect(store.createEffectCb(setState),[])
+}
 interface StoreContextData<T extends AbstractStore>{
     context: Context<T>
     store: T

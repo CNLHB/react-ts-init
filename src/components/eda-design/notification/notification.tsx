@@ -1,6 +1,6 @@
 
 import ReactDOM from 'react-dom';
-import React from 'react'
+import React, { useState } from 'react'
 import './notification.less'
 import Message, { MessageType } from '../message/message';
 
@@ -51,8 +51,7 @@ export const Notification = (function () {
         }} key={message + duration} type={type} close={close} message={message}></Message>)
         ReactDOM.render(MessageJsx, wrap)
         notification.appendChild(wrap)
-        console.log(duration);
-        
+
         if (duration !== 0) {
             let timer = setTimeout(() => {
                 if (wrap) {
