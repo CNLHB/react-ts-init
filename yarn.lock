@@ -3650,10 +3650,10 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cropperjs@^1.5.9:
-  version "1.5.9"
-  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.9.tgz#4ff9d31e02ad04d2fc5df0044207c2ad53d99da8"
-  integrity sha512-aPWlg43sLIcYN4GBXIdyvM09wNPgn1ug+vNVwV8jlb3dbgEX/B34Iw6hrjGSajkUDQBmaCi6uPOevFb7N0yUsw==
+cropperjs@^1.5.11:
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.5.11.tgz#502ae6d8ca098b124de6813601cca70015879fc0"
+  integrity sha512-SJUeBBhtNBnnn+UrLKluhFRIXLJn7XFPv8QN1j49X5t+BIMwkgvDev541f96bmu8Xe0TgCx3gON22KmY/VddaA==
 
 cross-spawn@7.0.3, cross-spawn@^7.0.0, cross-spawn@^7.0.2:
   version "7.0.3"
@@ -9001,7 +9001,7 @@ prompts@2.4.0, prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.7, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9174,12 +9174,19 @@ react-app-rewired@^2.1.8:
   dependencies:
     semver "^5.6.0"
 
-react-cropper@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/react-cropper/-/react-cropper-2.1.4.tgz#f637b0762f4d5c4f96ebd1bb7de663b19964b518"
-  integrity sha512-Pgd/Am4N1aUbkb923pmtgybYcV3Vco6KNhJOSUqH+pqdQxpmawapi2cWmD8+r1KscsQP/SGR+UoBU0+AMUpYgg==
+react-cropper@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/react-cropper/-/react-cropper-2.1.7.tgz#f9f8127b9516fecc44f918dd331107bfc32adfaf"
+  integrity sha512-dGp2l2wSh4KubWx3PQZIP27fV4shPYjIvm972IqJZdzi/fpDsB6s3GKEH54mk0gy18+80d3WnlgAP2xJ/o8+yw==
   dependencies:
-    cropperjs "^1.5.9"
+    cropperjs "^1.5.11"
+
+react-datetime@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-datetime/-/react-datetime-3.0.4.tgz#176159d08d35c9e750f0be2f0b974e4f9532ffa5"
+  integrity sha512-v6MVwCve+DRaLN2f22LTO5TlrPpkUXumPkp1zfrbhaFtSYGl2grZ2JtwJfLxRj/T4ACyePAV4srCR6cMSiQ/Iw==
+  dependencies:
+    prop-types "^15.5.7"
 
 react-dev-utils@^11.0.1:
   version "11.0.1"

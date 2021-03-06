@@ -26,7 +26,8 @@ import {
   Form,
   Upload,
   Cascader,
-  EdaMenu
+  EdaMenu,
+  DateTimePicker
   , Select, Button, Icon
 } from './../../components/eda-design/index';
 import { Option } from './../../components/eda-design/select/option';
@@ -400,8 +401,9 @@ export default function Test() {
     console.log('Content was updated:', content);
     console.log('Content was updated:', editor);
   }
-  const tinymceCDN = window.location.origin + '/tinymce/tinymce.min.js'
   return <div>
+      <div style={{marginBottom:300}}>
+      </div>
     {/* <Editor
     onChange={(e)=>{
       console.log(e);
@@ -445,6 +447,14 @@ export default function Test() {
       }}
       onEditorChange={handleEditorChange}
     />
+    {/*     "@tinymce/tinymce-react": "^3.9.0",
+    "@types/qrcode.react": "^1.0.1",
+    "axios": "^0.21.0",
+    "koa2": "^2.0.0-alpha.7",
+    "markdown-it": "^12.0.4",
+    "nodemon": "^2.0.6",
+    "qrcode.react": "^1.0.1",
+    "react-markdown-editor-lite": "^1.2.4", */}
     <Upload 
       multiple
       onChange={(file:any)=>{
