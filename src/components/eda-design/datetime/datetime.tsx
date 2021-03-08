@@ -6,6 +6,20 @@ import { Icon } from './../icon/Icon';
 import Button from './../button/button';
 type SelType = "all" | "before"
 // type SHOWTYPE = "LastYear" | "LastMonth" | "NextYear" | "NextMonth"
+const monthMapText: { [key: string]: string } = {
+    "1": "一月",
+    "2": "二月",
+    "3": "三月",
+    "4": "四月",
+    "5": "五月",
+    "6": "六月",
+    "7": "七月",
+    "8": "八月",
+    "9": "九月",
+    "10": "十月",
+    "11": "十一月",
+    "12": "十二月",
+}
 enum SHOW_TYPE {
     DAY = "DAY",
     YEAR = "YEAR",
@@ -151,7 +165,39 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
     }
     const createCurrentMonthDate = () => {
         const currentTime = getDateStr()
-        return [...supplementBefore(), ...createCurrentMonth(currentTime, getTimeStr(new Date(currentTime))), ...supplementAfter()].slice(0, 42)
+        const tmpArr = [...supplementBefore(), ...createCurrentMonth(currentTime, getTimeStr(new Date(currentTime))), ...supplementAfter()].slice(0, 42)
+        const ret: any[] = []
+        tmpArr.forEach((item, index: number) => {
+            const ind = Math.floor(index / 7)
+            if (ret[ind]) {
+                ret[ind].push(item)
+            } else {
+                ret[ind] = [item]
+            }
+        })
+        return ret
+    }
+
+    const createShowMonth = () => {
+        const monthArr = Array.from(new Array(12), (item, index) => {
+            const disabled = _year > year || (year === _year && ((index + 1) > _month))
+            return {
+                day: index + 1,
+                key: index + 1,
+                disabled: disabled,
+                name: "available"
+            }
+        })
+        const ret: any[] = []
+        monthArr.forEach((item, index: number) => {
+            const ind = Math.floor(index / 4)
+            if (ret[ind]) {
+                ret[ind].push(item)
+            } else {
+                ret[ind] = [item]
+            }
+        })
+        return ret
     }
     const clickHandle = (day: string, dateString: string) => {
         setDateStr(dateString)
@@ -218,7 +264,20 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
                 </>
                 break;
             case SHOW_TYPE.MONTH:
-
+                header = <>
+                    <span onClick={() => {
+                        setYear(_year - 1)
+                    }} className="eda-picker-panel__icon-btn eda-date-picker__prev-btn">
+                        <Icon type="" iconType="d-arrow-left" ></Icon>
+                    </span>
+                    <span className="eda-date-picker__header-label" >{_year}年</span>
+                    <span onClick={() => {
+                        //!(selType === "before" && (_year + 1 > year)) && 控制切换年份
+                        setYear(_year + 1)
+                    }} className="eda-picker-panel__icon-btn eda-date-picker__next-btn">
+                        <Icon type="" iconType="d-arrow-right"></Icon>
+                    </span>
+                </>
                 break;
             case SHOW_TYPE.YEAR:
                 const y = String(_year)
@@ -226,14 +285,17 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
                 const nextY = y.slice(0, -1) + 9
                 header = <>
                     <span onClick={() => {
-                        pageClick(PageType.LastYear)
+                        // pageClick(PageType.LastYear)
+                        setYear(_year - 10)
                     }} className="eda-picker-panel__icon-btn eda-date-picker__prev-btn">
                         <Icon type="" iconType="d-arrow-left" ></Icon>
                     </span>
 
                     <span className="eda-date-picker__header-label" >{prevY}年 - {nextY}年</span>
                     <span onClick={() => {
-                        pageClick(PageType.NextYear)
+                        // pageClick(PageType.NextYear)
+                        setYear(_year + 10)
+
                     }} className="eda-picker-panel__icon-btn eda-date-picker__next-btn">
                         <Icon type="" iconType="d-arrow-right"></Icon>
                     </span>
@@ -248,16 +310,7 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
         let body = null
         switch (showType) {
             case SHOW_TYPE.DAY:
-                const tmpArr = createCurrentMonthDate()
-                const ret: any[] = []
-                tmpArr.forEach((item, index: number) => {
-                    const ind = Math.floor(index / 7)
-                    if (ret[ind]) {
-                        ret[ind].push(item)
-                    } else {
-                        ret[ind] = [item]
-                    }
-                })
+                const ret = createCurrentMonthDate()
                 body =
                     <table cellSpacing="0" cellPadding="0" className="eda-date-table">
                         <tbody>
@@ -267,8 +320,6 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
                                     return <tr key={ind}>
                                         {
                                             item.map((timeObj: any, index) => {
-   
-                                                
                                                 const disabled = selType === "before" && compareDateByStr(timeObj.key, _currentTime)
                                                 const classTd = classNames(timeObj.name, "", {
                                                     "today": _currentTime === timeObj.key,
@@ -290,36 +341,63 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
                     </table>
                 break;
             case SHOW_TYPE.MONTH:
+                const yRet1 = createShowMonth()
+                body = <>
+                    <table cellSpacing="0" cellPadding="0" className="eda-year-table">
+                        <tbody>
+                            {
+                                yRet1.map((item: any[], ind: number) => {
 
+                                    return <tr key={ind}>
+                                        {
+                                            item.map((timeObj: any, index) => {
+                                                const disabled = selType === "before" && compareDateByStr(String(`${_year}-${timeObj.key}`), _currentTime)
+                                                const classTd = classNames(timeObj.name, "", {
+                                                    "today": `${year}${month}` === `${_year}${timeObj.key}`,
+                                                    "current-month": !disabled && `${_year}${_month}` === `${_year}${timeObj.key}`,
+                                                    "disabled": disabled
+                                                })
+                                                return <td onClick={() => {
+                                                    if (!disabled) {
+                                                        setMonth(timeObj.day)
+                                                        setShowType(SHOW_TYPE.DAY)
+                                                        //  && clickHandle(timeObj.day, timeObj.key)
+                                                    }
+                                                }} className={classTd} key={timeObj.key}>
+                                                    <span className="cell">{monthMapText[timeObj.day]}</span>
+                                                </td>
+                                            })
+                                        }
+                                    </tr>
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </>
                 break;
             case SHOW_TYPE.YEAR:
-                const yArr = createShowYear()
-                const yRet: any[] = []
-                yArr.forEach((item, index: number) => {
-                    const ind = Math.floor(index / 4)
-                    if (yRet[ind]) {
-                        yRet[ind].push(item)
-                    } else {
-                        yRet[ind] = [item]
-                    }
-                })
+                const yRet = createShowYear()
                 body = <>
                     <table cellSpacing="0" cellPadding="0" className="eda-year-table">
                         <tbody>
                             {
                                 yRet.map((item: any[], ind: number) => {
-                                    
+
                                     return <tr key={ind}>
                                         {
                                             item.map((timeObj: any, index) => {
                                                 const disabled = selType === "before" && compareDateByStr(String(timeObj.key), _currentTime)
                                                 const classTd = classNames(timeObj.name, "", {
                                                     "today": year === timeObj.key,
-                                                    // "current": dataStr === timeObj.key,
+                                                    "current-year": !disabled && `${_year}` === `${timeObj.key}`,
                                                     "disabled": disabled
                                                 })
                                                 return <td onClick={() => {
-                                                    !disabled && clickHandle(timeObj.day, timeObj.key)
+                                                    if (!disabled) {
+                                                        setYear(timeObj.day)
+                                                        setShowType(SHOW_TYPE.MONTH)
+                                                        //  && clickHandle(timeObj.day, timeObj.key)
+                                                    }
                                                 }} className={classTd} key={timeObj.key}>
                                                     <span className="cell">{timeObj.day}</span>
                                                 </td>
@@ -365,7 +443,16 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
                 name: "available"
             };
         }
-        return arr
+        const yRet: any[] = []
+        arr.forEach((item, index: number) => {
+            const ind = Math.floor(index / 4)
+            if (yRet[ind]) {
+                yRet[ind].push(item)
+            } else {
+                yRet[ind] = [item]
+            }
+        })
+        return yRet
 
     }
     return (<div className={classes}>
@@ -374,7 +461,7 @@ export const DateTimePicker = (props: IDateTimePickerProps) => {
         }} onBlur={() => {
             inputBlur()
         }} placeholder="选择日期"></Input>
-
+        
         <div ref={ref} tabIndex={1} onBlur={() => {
             divBlur()
         }} onMouseDown={() => {

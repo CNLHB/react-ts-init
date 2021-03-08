@@ -127,3 +127,36 @@ export const compareDateByStr = (a: string, b: string) => {
     return +new Date(a) > +new Date(b)
 }
 
+export function getViewPort(){
+    if(!document)return {width:0,height:0}
+    if(document.compatMode==="BackCompat"){
+        return {
+            width: document.body.clientWidth,
+            height:document.body.clientHeight
+        }
+    }else{
+        return {
+            width:document.documentElement.clientWidth,
+            height:document.documentElement.clientHeight
+        }
+    }
+}
+
+
+/**
+ * 
+ * @param element 
+ */
+export function getElementViewOverflow(element:any){
+    let current = element.parentElement
+    while(current!==null){
+        if(current.style){
+            if(current.style.overflow||current.style.overflowY){
+                return current
+            }else{
+                current = current.parentElement
+            }
+        }
+    }
+    return null
+}

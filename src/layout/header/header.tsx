@@ -64,7 +64,15 @@ export default function Header(){
                     <Avatar size="sm" href="https://image.lceda.cn/avatars/2020/10/e36x5ZmcEpm2ibm91N30rs2CZoHeGz8Ew0eR6dKD.jpeg"></Avatar>
               </div>
           </DropDown>
-
+          <DropDown  type="click" overlay={<DropDownMenu>
+              1111111csdads
+              <p>111</p>
+          </DropDownMenu>}>
+          <div >
+                    <span><Icon type="nc-u-notice-header"></Icon></span>
+                    按钮
+              </div>
+          </DropDown>
             </div>
     </header>
 }
