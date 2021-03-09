@@ -35,7 +35,7 @@
     background-color: #fff;
     box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
     box-sizing: border-box;
-    margin: 12px 0;
+    margin: 5px 0;
     padding-left: 0;
     padding: 10px 10px;
     &::before{
@@ -43,27 +43,31 @@
         content: " ";
         height: 0;
         top: -10px;
-        left: 50%;
         transform: translateX(-50%);
         position: absolute;
         border: 5px solid transparent;
         border-bottom: 5px solid #f9f9f9;
         z-index: 556;
     }
-    // &.eda-dropdown-left{
-    //     left: 0;
-    //     &::before{
-    //         left: 20%;
-    //         transform: translateX(-50%);
-    //     }
-    // }
-    // &.eda-dropdown-center{
-    //     left: 0;
-    //     transform: translateX(-50%);
-    // }
-    // &.eda-dropdown-right{
-    //     right: 0;
-    // }
+    &.eda-dropdown-left{
+        &::before{
+            left: 20%;
+            transform: translateX(-50%);
+        }
+    }
+    &.eda-dropdown-center{
+        transform: translateX(-50%);
+        &::before{
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+    &.eda-dropdown-right{
+        &::before{
+            right: 15%;
+            transform: translateX(50%);
+        }
+    }
     // &.eda-dropdown-top{
     //     top: 0;
     //     transform: translateY(-120%);
