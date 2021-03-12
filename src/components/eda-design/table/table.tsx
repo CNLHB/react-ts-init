@@ -2,6 +2,8 @@ import React, { ReactNode } from 'react';
 import './table.less'
 import { classNames } from './../utils/index';
 import { IPagination, Pagination } from './../pagination/pagination';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ExportJsonExcel from 'js-export-excel'
 interface IColumns {
     title: string,
     dataIndex: string,
@@ -10,6 +12,7 @@ interface IColumns {
     className?: string,
     ellipsis?: boolean,
     width?: number,
+
     render?: (item: string) => ReactNode
 }
 interface IDataSource {
@@ -21,6 +24,8 @@ interface IRender {
 interface ITableProps {
     columns: IColumns[];
     className?: string;
+    sheetDataFilter?:any[]
+    sheetDataHeader?:any[]
     dataSource: IDataSource[];
     rowClassName?: string;
     children?: ReactNode,
@@ -41,7 +46,7 @@ interface ITableProps {
 }
 
 export const Table = (props: ITableProps) => {
-    const { columns, dataSource, width, className, rowClassName = "", style, scroll, stripe, pagination } = props
+    const { columns, dataSource, width, sheetDataFilter,sheetDataHeader,className, rowClassName = "", style, scroll, stripe, pagination } = props
     let classTr = classNames("", "", {
         "eda-table-row-stripe": stripe
     })
@@ -81,10 +86,48 @@ export const Table = (props: ITableProps) => {
             </tr>
         })
     }
+    console.log(dataSource);
     
+    const downloadExcel = () =>{
+        let option:any = {}
+        if (props.dataSource) {
+        // 文件名
+          option.fileName = "xxxx"
+          option.datas = [
+            {
+            // 父组件传递的要导出的数据
+              sheetData: props.dataSource,
+              // sheet名字
+              sheetName: 'sheet',
+              //父组件传递过来的要导出的数据的key值是一个数组
+              sheetFilter: props.sheetDataFilter,
+              // Excel表格的表头,在父组件中传递的时候注意与key对应
+              sheetHeader: props.sheetDataHeader
+            }
+          ]
+        }
+        // 创建一个ExportJsonExcel实例
+        const exportExcel = new ExportJsonExcel(option)
+       // 将数据保存到Excel并且导出
+        exportExcel.saveExcel()
+      }
     return <div className="eda-table" style={{ width: width }}>
         <div className={classTable} style={{ width, overflowX: scroll?.x ? "auto" : "inherit" }}>
-            <table className="eda-table-wrapper" style={{ ...style }} cellSpacing="0" cellPadding="0" >
+        {/* <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className="download-table-xls-button"
+                    table="table-to-xls"
+                    filename="tablexls"
+                    sheet="tablexls"
+                    buttonText="Download as XLS"/> */}
+                                <button
+              onClick={() => downloadExcel()}
+              title="导出Excel表格"
+              className="btn"
+            >
+              导出全部
+            </button>
+            <table id="table-to-xls" className="eda-table-wrapper" style={{ ...style }} cellSpacing="0" cellPadding="0" >
                 <thead className="has-gutter">
                     {renderHeader(columns)}
                 </thead>
@@ -92,6 +135,7 @@ export const Table = (props: ITableProps) => {
                     {renderBody(dataSource)}
                 </tbody>
             </table>
+
         </div>
         {dataSource.length === 0 ? <div className="eda-table__empty-block">
             <span className="eda-table__empty-text">

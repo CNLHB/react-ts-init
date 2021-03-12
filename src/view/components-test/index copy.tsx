@@ -35,10 +35,10 @@ import Tag from './../../components/eda-design/tag/tag';
 import { Input } from './../../components/eda-design/input/input';
 import { postMultiple } from '@/config/axios';
 // 这个函数可以把File转为datauri字符串，作为演示
-function onImageUpload(file:any) {
+function onImageUpload(file: any) {
   return new Promise(resolve => {
     const reader = new FileReader();
-    reader.onload = (data:any) => {
+    reader.onload = (data: any) => {
       resolve(data.target.result);
     };
     reader.readAsDataURL(file);
@@ -313,7 +313,7 @@ interface IMenu {
 }
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-function handleEditorChange(obj:any) {    
+function handleEditorChange(obj: any) {
   console.log('handleEditorChange', obj)
 }
 export default function Test() {
@@ -402,8 +402,8 @@ export default function Test() {
     console.log('Content was updated:', editor);
   }
   return <div>
-      <div style={{marginBottom:300}}>
-      </div>
+    <div style={{ marginBottom: 300 }}>
+    </div>
     {/* <Editor
     onChange={(e)=>{
       console.log(e);
@@ -411,29 +411,29 @@ export default function Test() {
     }}
   defaultValue="Hello world!"
 /> */}
-          <Tooltip title="ssssssssss">
-            <Input
-              textType="number"
-              min={3}
-              max={10}
-              addonBefore="https://"
-            ></Input>
-            </Tooltip>
-        <MdEditor
+    <Tooltip title="ssssssssss">
+      <Input
+        textType="number"
+        min={3}
+        max={10}
+        addonBefore="https://"
+      ></Input>
+    </Tooltip>
+    <MdEditor
       style={{ height: "500px" }}
-      renderHTML={(text:any) => mdParser.render(text)}
+      renderHTML={(text: any) => mdParser.render(text)}
       onChange={handleEditorChange}
-      onImageUpload={onImageUpload} 
+      onImageUpload={onImageUpload}
     />
     <Editor
       initialValue="<p>This is the initial content of the editor</p>"
       // apiKey="wl85fiw1zxbzaxa94qwm5a9vutlzcyi5d9x84cetp8o8jcd4"
-    
+
       init={{
         height: 300,
         base_url: window.location.origin + '/tinymce',
-        document_base_url:window.location.origin + '/tinymce',
-        language:'zh_CN',//注意大小写
+        document_base_url: window.location.origin + '/tinymce',
+        language: 'zh_CN',//注意大小写
         menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview anchor',
@@ -455,24 +455,24 @@ export default function Test() {
     "nodemon": "^2.0.6",
     "qrcode.react": "^1.0.1",
     "react-markdown-editor-lite": "^1.2.4", */}
-    <Upload 
+    <Upload
       multiple
-      onChange={(file:any)=>{
-        postMultiple("x",file)
+      onChange={(file: any) => {
+        postMultiple("x", file)
         console.log(file)
       }}>
-            <Button 
-            type="submit"
-      btnType="action"
-      icon={<Icon type="" style={{fontSize:12}} 
-      iconType="sanjiaodown"></Icon>}
+      <Button
+        type="submit"
+        btnType="action"
+        icon={<Icon type="" style={{ fontSize: 12 }}
+          iconType="sanjiaodown"></Icon>}
       >add</Button>
     </Upload>
-    <Button 
+    <Button
       btnType="action"
-      icon={<Icon type="" style={{fontSize:12}} 
-      iconType="sanjiaodown"></Icon>}
-      >add</Button>
+      icon={<Icon type="" style={{ fontSize: 12 }}
+        iconType="sanjiaodown"></Icon>}
+    >add</Button>
     <div style={{ margin: "50px 50px" }}>
       <Radio
         type="checkbox"
@@ -619,10 +619,8 @@ export default function Test() {
           console.log(val);
         }}
       ></Cascader></div>
-    <div style={{ width: 500 }}>
+    <div style={{ width: 1000 }}>
       <Table
-      sheetDataFilter={["account","action","integralChange","integralValue","time"]}
-      sheetDataHeader={["account","action","integralChange","integralValue","time"]}
         stripe={false}
         scroll={
           { x: true }
